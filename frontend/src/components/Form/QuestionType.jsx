@@ -4,11 +4,11 @@ function QuestionType(props) {
     // console.log(props)
     const handleInputChange1 = (e) => {
         props.useset({...props.set,question: e.target.value});
-        props.totalmarks();
+        // props.totalmarks();
     };
     const handleInputChange2 = (e) => {
         props.useset({...props.set,marks: e.target.value});
-        props.totalmarks();
+        // props.totalmarks();
       };
   return (
     <div className="card">

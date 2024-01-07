@@ -38,13 +38,14 @@ function FormItem() {
       });
   }
 
-
+  useEffect( ()=>{tempApi()},[])
 
   useEffect(() => {
     const updatedSecondState = mcq.marks * mcq.question;
     settotal(updatedSecondState);
-    tempApi()
-  }, []);
+    // tempApi()
+  }, [mcq.marks, mcq.question]);
+  
   return (
     //  ()
     <div className="container">
@@ -67,20 +68,18 @@ function FormItem() {
           id="templet-Select"
           label="Select one"
         >
-          {tempName?.map((name, index) => {
+          
+                  {/* <option value="1">Java</option> */}
+               
+          {tempName? (tempName?.map((name, index) => {
             return (
-              <>
-                <div key={index}>
-                  <option value="1">{name[0].temp_name}</option>
-                </div>
-              </>
+              <option key={index +1} value= {index+1}>{name.temp_name}</option>
             )
-          })}
+          })):(null)}
 
-          {/* <option value="2">Two</option>
-          <option value="3">Three</option> */}
+          {/* {console.log(tempName)} */}
         </select>
-        <QuestionType total={TotalMcq} title="Mcq" set={mcq} useset={setmcq} />
+        <QuestionType  total={TotalMcq} title="Mcq" set={mcq} useset={setmcq} />
 
         <br />
 
