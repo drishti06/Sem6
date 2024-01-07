@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import './Login.css'
-
+import logoPng from './logo.png'
+import { style } from "@mui/system";
 function Login() {
   const [isSignIn, setIsSignIn] = useState(true);
 
@@ -9,11 +10,19 @@ function Login() {
   };
 
   return (
+    <div className="body">
+      <div className="logo d-flex">
+        <img src={logoPng} alt="" />
+        <h1>
+          
+          formjam </h1>
+      </div>
+      <div className="loginBlock">
     <div
-      className={`wrapper ${isSignIn ? "animated-signin" : "animated-signup"}`}
+      className={`wrapper  ${isSignIn ? "animated-signin" : "animated-signup"}`}
     >
       <div className={`form-container ${isSignIn ? "sign-in" : "sign-up"}`}>
-        <form action="#">
+        <form action="#" className='form'>
           <h2>{isSignIn ? "Login" : "Sign Up"}</h2>
           <div className="form-group">
             <input type="text" required />
@@ -62,6 +71,8 @@ function Login() {
           </div>
         </form>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

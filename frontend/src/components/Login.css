@@ -1,36 +1,12 @@
+/* Login.module.css */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-
-}
 
 :root {
     --mainColor: #362189;
     --whiteColor: #ffffff;
     --titleColor: #555555;
     --labelColor: #333333;
-}
-
-html {
-    font-size: 62.5%;
-    scroll-behavior: smooth;
-}
-
-body {
-    background: linear-gradient(to right, #da4453, var(--mainColor));
-    font-weight: 400;
-    min-height: 100vh;
-    display: flex;
-    justify-content: flex-end;
-    /* Updated to position the form on the right side */
-    overflow: hidden;
-    margin-right: 10%;
-    margin-top: 5%;
-
 }
 
 .wrapper {
@@ -41,26 +17,26 @@ body {
 
 @media(min-width: 540px) {
     .wrapper {
-        width: 40rem;
+        /* width: 40rem; */
     }
 }
 
 .wrapper .form-container {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10%;
+    left: 20%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
+    width: 60%;
+    height: 80%;
     background-color: var(--whiteColor);
     border-radius: .5rem;
     box-shadow: 0 0 1rem 0 rgba(0 0 0 / .2);
 }
 
 .wrapper .form-container form h2 {
-    font-size: 3rem;
+    font-size: 1.5rem;
     text-align: center;
     text-transform: capitalize;
     color: var(--titleColor);
@@ -68,8 +44,8 @@ body {
 
 .wrapper .form-container form .form-group {
     position: relative;
-    width: 32rem;
-    margin: 3rem 0;
+    width: 80%;
+    margin: 0.5rem 0;
 }
 
 .wrapper .form-container form .form-group i,
@@ -77,10 +53,10 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.6rem;
+    font-size: 1rem;
     text-transform: capitalize;
     color: var(--labelColor);
-    padding: 0 .5rem;
+    /* padding: 0 .5rem; */
     pointer-events: none;
     transition: all .5s ease;
 }
@@ -95,7 +71,7 @@ body {
 
 .wrapper .form-container form .form-group input {
     width: 100%;
-    height: 4rem;
+    height: 2rem;
     padding: 0 1rem;
     border-radius: .5rem;
     border: none;
@@ -135,9 +111,9 @@ form .form-group input:valid~i {
     background: linear-gradient(to right, #da4453, var(--mainColor));
     color: var(--whiteColor);
     text-transform: capitalize;
-    width: 100%;
-    height: 4rem;
-    font-size: 1.6rem;
+    width: 80%;
+    height: 2rem;
+    font-size: 1rem;
     font-weight: 500;
     outline: none;
     border: none;
@@ -148,11 +124,16 @@ form .form-group input:valid~i {
 
 .wrapper .form-container form .link {
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     color: var(--labelColor);
     margin: 2.5rem 0;
 }
-
+.form{
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
 .wrapper .form-container form .link a {
     text-transform: capitalize;
     color: var(--mainColor);
@@ -186,6 +167,9 @@ form .form-group input:valid~i {
         transform: translateX(0) rotate(7deg) scale(1);
     }
 }
+
+
+/* ... (Previous code) ... */
 
 .wrapper.animated-signin .form-container.sign-up {
     animation: rotatecard .7s ease-in-out forwards;
@@ -237,3 +221,46 @@ form .form-group input:valid~i {
         z-index: 1;
     }
 }
+
+/* Add any additional styling specific to your Login component below */
+
+.body {
+    background: linear-gradient(to right, #da4453, var(--mainColor));
+    font-weight: 400;
+    min-height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    /* margin-right: 10%;
+    margin-top: 5%; */
+    padding-right:10% ;
+    /* padding-top: 5%; */
+}
+
+.logo {
+    display: flex;
+    align-items: center;filter: drop-shadow(2px 4px 8px hsla(0deg, 0%, 0%, 0.5))
+}
+
+.logo>img {
+    margin-right: 10px;
+}
+
+.logo>h1 {
+    font-size: 6vw;
+    color: #fff;
+    font-weight: bold;
+}
+
+.loginBlock {
+    width: 70%;
+    max-width: 600px; /* Adjust the max-width as needed */
+    margin: 0 auto; /* Center the block horizontally */
+    height: 87vh; /* Make it fill the entire height of the viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* ... (Any additional styles for your Login component) ... */
