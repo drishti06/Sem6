@@ -7,12 +7,12 @@ import Template from './components/Template/Template';
 import Login from './components/Login';
 
 function App() {
-  const [logedin, setlogedin] = useState(true);
+  const [logedin, setlogedin] = useState(false);
 
   return (
     <>
       {
-        logedin? (<Sidebar />):(<Login />)
+        logedin? (<Sidebar loginState = {setlogedin} />):(<Login />)
       }
       
       {/* <FormItem /> */}
