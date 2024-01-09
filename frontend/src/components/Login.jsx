@@ -14,7 +14,9 @@ function Login(props) {
 });
 // const navigate = useNavigate()
 //   const history = useHistory();
-
+const handleSwitchForm = () => {
+  setIsSignIn((prevIsSignIn) => !prevIsSignIn);
+};
 const baseURL= 'http://localhost:8080'
 // const header ={
 //   "ngrok-skip-browser-warning": true
@@ -27,7 +29,8 @@ const handleForm=async(e)=>{
    .then(function (response) {
       // localStorage.setItem("token",response.data.token);
       console.log(response.data);
-      // history.push('/Sidebar');
+      handleSwitchForm();
+      
       
   })
   .catch(function (error) {
@@ -40,7 +43,7 @@ const handleForm=async(e)=>{
       localStorage.setItem("token",response.data.token);
       console.log(response.data.token);
       // navigate('/Form/TotalForm');
-      props.loginstate(isSignIn);
+      props.loginState(isSignIn);
       //  navigate('/');
 
       })
@@ -48,11 +51,14 @@ const handleForm=async(e)=>{
           console.log(error);
           alert(error.msg);
       });}
+      setloginData({
+        name:"",
+      email:"",
+      password:""
+    });
 }
 
-  const handleSwitchForm = () => {
-    setIsSignIn((prevIsSignIn) => !prevIsSignIn);
-  };
+ 
 
   return (
     <div className="body">
