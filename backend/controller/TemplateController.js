@@ -39,6 +39,39 @@ export const allQuestionsById = async (req, res) => {
     }
 }
 
+export const randomNoOfQuestions = async (req, res) => {
+    try {
+        const template_name = req.body.template_name;
+        if (!template_name) {
+            return res.status(400).json({ error: 'Template name is required in the request body' });
+        }
+        const number = req.body.quantity
+        // console.log(number)
+        const questions = await Template.aggregate([
+            { $match: { temp_name: template_name } }, // Filter documents by template_name
+            { $project: { random_mcqs: { $slice: ["$mcqs", number] } } } // Select random elements from 'mcqs' field
+        ]);
+
+        if (questions.length === 0) {
+            return res.status(404).json({ error: 'No documents found with the specified template_name' });
+        }
+        res.status(200).json(questions[0].random_mcqs)
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
+export const allTempName = async (req, res) => {
+    try {
+        const result = await Template.distinct('temp_name');
+        res.json(result);
+    } catch (err) {
+        console.error('Error fetching template names:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+}
+
 export const deletTemplate = async (req, res) => {
     try {
         const id = req.params.id

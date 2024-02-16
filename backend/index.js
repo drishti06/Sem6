@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import cors from "cors"
 import bodyParser from "body-parser"
 import TemplateRoute from "./routes/Template.js"
+import FormRoute from "./routes/Forms.js"
 const server = express()
 
 server.use(express.json());
@@ -21,6 +22,7 @@ server.get('/', (req, res) => {
 })
 
 server.use("/api", TemplateRoute)
+    .use("/form", FormRoute)
 
 server.listen(process.env.PORT, () => {
     console.log(`server started at port ${process.env.PORT}`);

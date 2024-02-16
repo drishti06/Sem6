@@ -48,6 +48,9 @@ function FormItem() {
   return (
     //  ()
     <div className="container">
+      <h2>
+        Hello
+      </h2>
       <form onSubmit={handleSubmit}>
         <div className="input mb-3">
           <span className="input-text" id="inputGroup-sizing-default">
@@ -71,7 +74,7 @@ function FormItem() {
             return (
               <>
                 <div key={index}>
-                  <option value="1">{name[0].temp_name}</option>
+                  {/* <option value="1">{name[0].temp_name}</option> */}
                 </div>
               </>
             )
