@@ -39,6 +39,21 @@ export const allQuestionsById = async (req, res) => {
     }
 }
 
+export const getQuestionsNumberByTempName = async (req, res) => {
+    const { name } = req.params
+    // console.log(name)
+    try {
+        const template = await Template.findOne({ temp_name: name }).populate('mcqs');
+        if (!template) {
+            return res.status(404).json({ message: 'Template not found' });
+        }
+        res.status(200).json(template.mcqs.length);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
 export const deletTemplate = async (req, res) => {
     try {
         const id = req.params.id

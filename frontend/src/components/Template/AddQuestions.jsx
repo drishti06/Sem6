@@ -57,26 +57,22 @@ const AddQuestions = () => {
         setError('');
     };
 
-    // const sendToApi = async () => {
-    //     const apiEndpoint = 'https://18b8-182-48-224-214.ngrok-free.app/api/temp';
-    //     const requestData = {
-    //         temp_name: templateName,
-    //         mcq: submittedQuestions,
-    //     };
-    //     const respomse = await axios.post(apiEndpoint, requestData, {
-    //         headers: {
-    //             'Content-Type': 'multipart/form-data',
-    //             'Authorization': 'Bearer ' + localStorage.getItem('token')
-    //         },
-    //     })
-    //         .then((response) => {
-    //             console.log('API Response:', response.data);
-    //             setSubmittedQuestions([]);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error sending data to API:', error);
-    //         });
-    // };
+
+    const sendToApi = async () => {
+        const apiEndpoint = 'http://localhost:8080/api/temp';
+        const requestData = {
+            temp_name: templateName,
+            mcqs: submittedQuestions,
+        };
+        const response = await axios.post(apiEndpoint, requestData)
+            .then((response) => {
+                console.log('API Response:', response.data);
+
+            })
+            .catch((error) => {
+                console.error('Error sending data to API:', error);
+            });
+    };
 
     const removeQuestion = (index) => {
         const updatedQuestions = [...submittedQuestions];
@@ -177,7 +173,7 @@ const AddQuestions = () => {
                 {
                     submittedQuestions.length > 0 && (
                         <button type="button" className="btn btn-success" onClick={() => {
-                            // sendToApi();
+                            sendToApi();
                             resetSubmittedQuestions();
                         }}>
                             Send to API

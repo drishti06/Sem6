@@ -1,6 +1,6 @@
 import express from "express"
 import multer from "multer"
-import { allQuestionsById, allTemplates, deletTemplate, parseExcel, uploadExcel } from "../controller/TemplateController.js"
+import { allQuestionsById, allTemplates, deletTemplate, getQuestionsNumberByTempName, parseExcel, uploadExcel } from "../controller/TemplateController.js"
 
 
 const router = express.Router()
@@ -23,6 +23,7 @@ router
     .get('/templates', allTemplates)
     .get('/temp/:id', allQuestionsById)
     .get('/deleteTemp/:id', deletTemplate)
+    .get('/template/:name', getQuestionsNumberByTempName)
 
 
 export default router
