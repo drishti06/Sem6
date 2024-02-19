@@ -13,6 +13,17 @@ export const newForm = async (req, res) => {
         }
 
     } catch (error) {
-        res.status(400).json(error.message)
+        res.status(400).json({ errorInNewForm: error.message })
     }
+}
+
+export const examForm = async (req, res) => {
+    try {
+        const name = req.body.examName
+        const form = await Form.findOne({ form_name: name })
+        res.status(200).json(form)
+    } catch (error) {
+        res.status(400).json({ errorInExamForm: error.message })
+    }
+
 }
