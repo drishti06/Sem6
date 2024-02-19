@@ -10,7 +10,7 @@ const FormSchema = Schema({
         type: String,
         required: true
     },
-    total_mcq: {
+    total_mcqs: {
         type: Array,
         required: true
     },
@@ -23,8 +23,9 @@ const FormSchema = Schema({
         required: true
     },
     passing_marks: {
-        type: Number
+        type: Number,
+        required: true
     }
 })
 
-export const Form = mongoose.model("form", FormSchema)
+export const Form = mongoose.model("forms", FormSchema)

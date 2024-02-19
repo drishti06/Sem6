@@ -1,6 +1,6 @@
 import express from "express"
 import multer from "multer"
-import { allQuestionsById, allTempName, allTemplates, deletTemplate, parseExcel, randomNoOfQuestions, uploadExcel } from "../controller/TemplateController.js"
+import { allQuestionsById, allTemplates, deletTemplate, getQuestionsNumberByTempName, parseExcel, randomNoOfQuestions, uploadTemplate } from "../controller/TemplateController.js"
 
 
 const router = express.Router()
@@ -19,11 +19,12 @@ const upload = multer({
 })
 router
     .post('/excel', upload.single('csvFile'), parseExcel)
+    .post('/temp', uploadTemplate)
     .post('/randomQuestions', randomNoOfQuestions)
-    .post('/temp', uploadExcel)
     .get('/templates', allTemplates)
     .get('/temp/:id', allQuestionsById)
     .get('/deleteTemp/:id', deletTemplate)
-    .get('/allTempName', allTempName)
+    .get('/template/:name', getQuestionsNumberByTempName)
+
 
 export default router

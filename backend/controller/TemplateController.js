@@ -10,7 +10,7 @@ export const parseExcel = async (req, res) => {
     }
 }
 
-export const uploadExcel = async (req, res) => {
+export const uploadTemplate = async (req, res) => {
     try {
         const { temp_name, mcqs } = req.body
         const data = await Template.create({ temp_name, mcqs })
@@ -40,26 +40,40 @@ export const allQuestionsById = async (req, res) => {
 }
 
 export const randomNoOfQuestions = async (req, res) => {
-    try {
-        const template_name = req.body.template_name;
-        if (!template_name) {
-            return res.status(400).json({ error: 'Template name is required in the request body' });
-        }
-        const number = req.body.quantity
-        // console.log(number)
-        const questions = await Template.aggregate([
-            { $match: { temp_name: template_name } }, // Filter documents by template_name
-            { $project: { random_mcqs: { $slice: ["$mcqs", number] } } } // Select random elements from 'mcqs' field
-        ]);
+    const temp_name = req.body.temp_name;
+    const number = req.body.number
 
-        if (questions.length === 0) {
-            return res.status(404).json({ error: 'No documents found with the specified template_name' });
+    try {
+        // Find the template in the database
+        const template = await Template.findOne({ temp_name: temp_name });
+
+        if (!template) {
+            res.status(404).json(`Template with name "${temp_name}" not found`);
         }
-        res.status(200).json(questions[0].random_mcqs)
+
+        // Get all MCQs from the template
+        const mcqs = template.mcqs;
+
+        // Ensure the requested number of questions doesn't exceed available MCQs
+        if (number > mcqs.length) {
+            res.status(404).json(`Template "${temp_name}" only has ${mcqs.length} MCQs`);
+        }
+
+        // Shuffle the array of MCQs randomly
+        // (Assuming a modern JavaScript environment with `Array.prototype.sort()` that supports callbacks)
+        mcqs.sort(() => 0.5 - Math.random());
+
+        // Extract the requested number of random MCQs
+        const randomMcqs = mcqs.slice(0, number);
+
+        res.status(200).json(randomMcqs)
     } catch (error) {
+        console.error(error);
         res.status(400).json(error.message)
     }
+
 }
+
 
 export const allTempName = async (req, res) => {
     try {
@@ -70,6 +84,21 @@ export const allTempName = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 
+}
+
+export const getQuestionsNumberByTempName = async (req, res) => {
+    try {
+        const { name } = req.params
+        const template = await Template.findOne({ temp_name: name }).populate("mcqs")
+        if (!template) {
+            res.status(404).json('Template not found ')
+        }
+        else {
+            res.status(200).json(template.mcqs.length)
+        }
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
 }
 
 export const deletTemplate = async (req, res) => {
