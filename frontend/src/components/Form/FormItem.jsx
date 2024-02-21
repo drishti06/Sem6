@@ -249,7 +249,7 @@ function FormItem() {
             {isNaN(percent) ? 0 : Math.round(((percent / (selectedQuestions * marksPerQuestion)) * 100), 2)}%
           </span>
         </div>
-        <DateTime />
+        {/* <DateTime /> */}
         <div className="col-12">
           <br />
           <button type="submit" className="btn btn-primary text-center">

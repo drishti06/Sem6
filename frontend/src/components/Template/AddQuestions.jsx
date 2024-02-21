@@ -3,11 +3,11 @@ import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 const AddQuestions = () => {
     const [questions, setQuestions] = useState({
-        question: '',
-        opt1: '',
-        opt2: '',
-        opt3: '',
-        opt4: ''
+        Question: '',
+        A: '',
+        B: '',
+        C: '',
+        D: ''
     });
 
     const [submittedQuestions, setSubmittedQuestions] = useState([]);
@@ -24,19 +24,19 @@ const AddQuestions = () => {
     const handleDropdownSelection = (selectedOption) => {
         setQuestions((prevState) => ({
             ...prevState,
-            sol: selectedOption,
+            Solution: selectedOption,
         }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (
-            !questions.question ||
-            !questions.opt1 ||
-            !questions.opt2 ||
-            !questions.opt3 ||
-            !questions.opt4 ||
-            !questions.sol
+            !questions.Question ||
+            !questions.A ||
+            !questions.B ||
+            !questions.C ||
+            !questions.D ||
+            !questions.Solution
         ) {
             setError('All fields must be filled in.');
             setTimeout(() => {
@@ -47,12 +47,12 @@ const AddQuestions = () => {
 
         setSubmittedQuestions([...submittedQuestions, { ...questions }]);
         setQuestions({
-            question: '',
-            opt1: '',
-            opt2: '',
-            opt3: '',
-            opt4: '',
-            sol: ''
+            Question: '',
+            A: '',
+            B: '',
+            C: '',
+            D: '',
+            Solution: ''
         });
         setError('');
     };
@@ -61,7 +61,7 @@ const AddQuestions = () => {
         const apiEndpoint = 'http://localhost:8080/api/temp';
         const requestData = {
             temp_name: templateName,
-            mcq: submittedQuestions,
+            mcqs: submittedQuestions,
         };
         await axios.post(apiEndpoint, requestData)
             .then((response) => {
@@ -101,8 +101,8 @@ const AddQuestions = () => {
                     <input
                         type="text"
                         onChange={handleQuestions}
-                        value={questions.question}
-                        name="question"
+                        value={questions.Question}
+                        name="Question"
                         className="form-control"
                         aria-label="Sizing example input"
                         placeholder="Enter Question"
@@ -113,44 +113,44 @@ const AddQuestions = () => {
                     <input
                         type="text"
                         onChange={handleQuestions}
-                        value={questions.opt1}
-                        name="opt1"
+                        value={questions.A}
+                        name="A"
                         className="form-control mb-2"
                         aria-label="Text input with radio button"
-                        placeholder="Option 1"
+                        placeholder="A"
                     />
                 </div>
                 <div className="input-group">
                     <input
                         type="text"
                         onChange={handleQuestions}
-                        value={questions.opt2}
-                        name="opt2"
+                        value={questions.B}
+                        name="B"
                         className="form-control mb-2"
                         aria-label="Text input with radio button"
-                        placeholder="Option 2"
+                        placeholder="B"
                     />
                 </div>
                 <div className="input-group">
                     <input
                         type="text"
                         onChange={handleQuestions}
-                        value={questions.opt3}
-                        name="opt3"
+                        value={questions.C}
+                        name="C"
                         className="form-control mb-2"
                         aria-label="Text input with radio button"
-                        placeholder="Option 3"
+                        placeholder="C"
                     />
                 </div>
                 <div className="input-group">
                     <input
                         type="text"
                         onChange={handleQuestions}
-                        value={questions.opt4}
-                        name="opt4"
+                        value={questions.D}
+                        name="D"
                         className="form-control"
                         aria-label="Text input with radio button"
-                        placeholder="Option 4"
+                        placeholder="D"
                     />
                 </div>
                 <br />
@@ -159,10 +159,10 @@ const AddQuestions = () => {
                         Answer
                     </button>
                     <ul className="dropdown-menu">
-                        <li className="dropdown-item" onClick={() => handleDropdownSelection('Option 1')}>Option 1</li>
-                        <li className="dropdown-item" onClick={() => handleDropdownSelection('Option 2')}>Option 2</li>
-                        <li className="dropdown-item" onClick={() => handleDropdownSelection('Option 3')}>Option 3</li>
-                        <li className="dropdown-item" onClick={() => handleDropdownSelection('Option 4')}>Option 4</li>
+                        <li className="dropdown-item" onClick={() => handleDropdownSelection('A')}>A</li>
+                        <li className="dropdown-item" onClick={() => handleDropdownSelection('B')}>B</li>
+                        <li className="dropdown-item" onClick={() => handleDropdownSelection('C')}>C</li>
+                        <li className="dropdown-item" onClick={() => handleDropdownSelection('D')}>D</li>
                     </ul>
                 </div>
                 <button type="submit" className="btn btn-primary">
@@ -197,8 +197,8 @@ const AddQuestions = () => {
                                                 </strong>
                                             </span>
                                             <strong>Question:</strong> {q.question} <br />
-                                            <strong>Options:</strong> {q.opt1}, {q.opt2}, {q.opt3}, {q.opt4} <br />
-                                            <strong>Answer:</strong>{q.sol}
+                                            <strong>Options:</strong> {q.A}, {q.B}, {q.C}, {q.D} <br />
+                                            <strong>Answer:</strong>{q.Solution}
                                         </li>
 
                                     </div>

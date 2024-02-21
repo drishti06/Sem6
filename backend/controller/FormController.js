@@ -27,3 +27,13 @@ export const examForm = async (req, res) => {
     }
 
 }
+
+export const allForms = async (req, res) => {
+    try {
+        const forms = await Form.find()
+        res.status(200).json(forms)
+
+    } catch (error) {
+        res.status(400).json({ errorInShowingAllForms: error.message })
+    }
+}

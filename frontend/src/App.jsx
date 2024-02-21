@@ -10,11 +10,11 @@ function App() {
 
   return (
     <>
-      {/* {loggedInUser ?
+      {loggedInUser ?
         <Sidebar /> :
         <Login />
-      } */}
-      <ExamForm />
+      }
+      {/* <ExamForm /> */}
     </>
   );
 }
