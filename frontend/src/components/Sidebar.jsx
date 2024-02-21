@@ -1,5 +1,5 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import Login from "./Login.jsx"
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +15,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AddQuestions from './Template/AddQuestions';
 import FormItem from './Form/FormItem';
 import "./Sidebar.css"
+import ExamForm from './Student/ExamForm.jsx';
+import AllForm from './Form/AllForm.jsx';
 const drawerWidth = 240;
 
 function Sidebar(props) {
@@ -35,6 +37,7 @@ function Sidebar(props) {
       <div className='list'>
         <a href="/form">Forms</a>
         <a href='/template'>Templates</a>
+        <a href='/allForms'>Show Forms</a>
       </div>
       <Divider />
 
@@ -111,6 +114,8 @@ function Sidebar(props) {
             <Route path='/form' element={<FormItem />}></Route>
             <Route path='/template' element={<Template />}></Route>
             <Route path='/addQuestions' element={<AddQuestions />}></Route>
+            <Route path='/exam' element={<ExamForm />}></Route>
+            <Route path='/allForms' element={<AllForm />}></Route>
           </Routes>
         </BrowserRouter>
       </Box>

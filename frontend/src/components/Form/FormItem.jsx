@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DateTime from "../Form/DateTime";
+<<<<<<< HEAD
+=======
+import "./FormItem.css"
+>>>>>>> master
 
 function FormItem() {
   const [percent, setPercent] = useState(0);
@@ -24,7 +28,11 @@ function FormItem() {
       const response = await axios.get(`${baseURL}/api/templates`);
       setTempName(response.data.map((template) => template.temp_name));
       setTotTemp(response.data.length);
+<<<<<<< HEAD
       setTotQues(0); // Reset totQues initially
+=======
+      setTotQues(0); // Reset totQues initiallyc
+>>>>>>> master
     } catch (error) {
       console.log(error.message);
     }
@@ -61,15 +69,70 @@ function FormItem() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     // Calculate total marks based on selected questions and marks per question
     const totalMarks = selectedQuestions * marksPerQuestion;
     setTotal(totalMarks);
+=======
+    if (!e.target.examName.value || !selectedTemplate || selectedQuestions === 0 || !marksPerQuestion || !percent) {
+      let errorMessage = 'Please fill in all the details:';
+      if (!e.target.examName.value) errorMessage += '\n- Exam Name';
+      if (!selectedTemplate) errorMessage += '\n- Template';
+      if (selectedQuestions === 0) errorMessage += '\n- Number of Questions';
+      if (!marksPerQuestion) errorMessage += '\n- Marks Per Question';
+      if (!percent) errorMessage += '\n- Passing Marks';
+
+      alert(errorMessage);
+      return;
+    }
+    const totalMarks = selectedQuestions * marksPerQuestion;
+    setTotal(totalMarks);
+    const data = {
+      form_name: e.target.examName.value,
+      template_name: selectedTemplate,
+      total_mcqs: randomQuestions,
+      no_of_mcqs: selectedQuestions,
+      total_marks: totalMarks,
+      passing_marks: Math.floor(percent),
+    };
+
+    axios.post("http://localhost:8080/form/createForm", data)
+      .then((res) => {
+        console.log('Form saved successfully:', res.data);
+        alert('Form saved')
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
+>>>>>>> master
   };
 
   const handleInputChange1 = (e) => {
     setPercent(e.target.value);
   };
 
+<<<<<<< HEAD
+=======
+  const [randomQuestions, setRandomQuestions] = useState([]);
+
+  // console.log(randomQuestionsData)
+  const handleRandomQuestions = () => {
+
+    const data = {
+      temp_name: selectedTemplate,
+      number: selectedQuestions
+    };
+
+    axios.post(`${baseURL}/api/randomQuestions`, data)
+      .then((res) => {
+        setRandomQuestions(res.data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
+>>>>>>> master
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
@@ -81,6 +144,7 @@ function FormItem() {
             type="text"
             className="form-control"
             aria-label="Sizing example input"
+            name='examName'
             aria-describedby="inputGroup-sizing-default"
           />
         </div>
@@ -100,7 +164,10 @@ function FormItem() {
             <option key={name} value={name}>
               {name}
             </option>
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
           ))}
         </select>
         <div className="card">
@@ -139,6 +206,7 @@ function FormItem() {
               )
             }
           </div>
+<<<<<<< HEAD
         </div>
         <br />
         <h3>Total Marks: {total}</h3>
@@ -160,14 +228,85 @@ function FormItem() {
           </span>
         </div>
         <DateTime />
+=======
+        </div>
+        <div className="questions" >
+          <button onClick={handleRandomQuestions} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Preview Questions
+          </button>
+          <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div style={{ paddingTop: '2rem' }} className="modal-dialog">
+              <div className="modal-content" style={{ width: '45vw' }}>
+                <div className="modal-header">
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body" >
+                  {randomQuestions.map((question, index) => (
+                    <div key={index}>
+                      <ul className="randQues">
+                        <li>
+                          <strong> Q.{index + 1}. {question.Question}</strong>
+                        </li>
+                        <li>
+                          A. {question.A}
+                        </li>
+                        <li>
+                          B.  {question.B}
+                        </li>
+                        <li>
+                          C.  {question.C}
+                        </li>
+                        <li>
+                          D. {question.D}
+                        </li>
+                        <li>
+                          <strong> Ans. {question.Solution}</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <h3>Total Marks: {selectedQuestions * marksPerQuestion}</h3>
+        <div className="input-group mb-3">
+          <span className="input-group-text" id="inputGroup-sizing-small">
+            Enter Passing Marks
+          </span>
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Enter Number"
+            max={selectedQuestions * marksPerQuestion}
+            onChange={handleInputChange1}
+            aria-label="Recipient's username"
+            aria-describedby="basic-addon2"
+          />
+          <span className="input-group-text" id="basic-addon2">
+            {isNaN(percent) ? 0 : Math.round(((percent / (selectedQuestions * marksPerQuestion)) * 100), 2)}%
+          </span>
+        </div>
+        {/* <DateTime /> */}
+>>>>>>> master
         <div className="col-12">
           <br />
           <button type="submit" className="btn btn-primary text-center">
             Save Form
           </button>
         </div>
+<<<<<<< HEAD
       </form>
     </div>
+=======
+      </form >
+    </div >
+>>>>>>> master
   );
 }
 

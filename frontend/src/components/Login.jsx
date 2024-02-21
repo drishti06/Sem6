@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import './Login.css'
 
 function Login() {
@@ -9,32 +9,30 @@ function Login() {
   };
 
   return (
-    <div
-      className={`wrapper ${isSignIn ? "animated-signin" : "animated-signup"}`}
-    >
+    <div className={`wrapper ${isSignIn ? "animated-signin" : "animated-signup"}`}>
       <div className={`form-container ${isSignIn ? "sign-in" : "sign-up"}`}>
-        <form action="#">
+        <form className="form" action="#">
           <h2>{isSignIn ? "Login" : "Sign Up"}</h2>
           <div className="form-group">
-            <input type="text" required />
+            <input type="text" required placeholder="Enter Username" />
             <i className="fas fa-user"></i>
             <label htmlFor="">Username</label>
           </div>
           {isSignIn || (
             <div className="form-group">
-              <input type="email" required />
+              <input type="email" required placeholder="Enter Email" />
               <i className="fas fa-at"></i>
               <label htmlFor="">Email</label>
             </div>
           )}
           <div className="form-group">
-            <input type="password" required />
+            <input type="password" required placeholder="Enter Password" />
             <i className="fas fa-lock"></i>
             <label htmlFor="">Password</label>
           </div>
           {!isSignIn && (
             <div className="form-group">
-              <input type="password" required />
+              <input type="password" required placeholder=" Confirm Password" />
               <i className="fas fa-lock"></i>
               <label htmlFor="">Confirm Password</label>
             </div>
