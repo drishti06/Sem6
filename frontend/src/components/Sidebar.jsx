@@ -36,7 +36,7 @@ function Sidebar(props) {
       {/* <Divider /> */}
       <div className='list'>
         <a href="/form">Forms</a>
-        <a href='/template'>Templates</a>
+        <a href='/sidebar/template'>Templates</a>
         <a href='/allForms'>Show Forms</a>
       </div>
       <Divider />
@@ -109,15 +109,7 @@ function Sidebar(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        <BrowserRouter>
-          <Routes>
-            <Route path='/form' element={<FormItem />}></Route>
-            <Route path='/template' element={<Template />}></Route>
-            <Route path='/addQuestions' element={<AddQuestions />}></Route>
-            <Route path='/exam' element={<ExamForm />}></Route>
-            <Route path='/allForms' element={<AllForm />}></Route>
-          </Routes>
-        </BrowserRouter>
+        <Template />
       </Box>
     </Box>
   );

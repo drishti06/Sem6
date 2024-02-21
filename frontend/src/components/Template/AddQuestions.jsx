@@ -57,27 +57,16 @@ const AddQuestions = () => {
         setError('');
     };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     const sendToApi = async () => {
         const apiEndpoint = 'http://localhost:8080/api/temp';
         const requestData = {
             temp_name: templateName,
             mcqs: submittedQuestions,
         };
-<<<<<<< HEAD
-        const response = await axios.post(apiEndpoint, requestData)
-            .then((response) => {
-                console.log('API Response:', response.data);
-
-=======
         await axios.post(apiEndpoint, requestData)
             .then((response) => {
                 console.log('API Response:', response.data);
                 setSubmittedQuestions([]);
->>>>>>> master
             })
             .catch((error) => {
                 console.error('Error sending data to API:', error);

@@ -1,6 +1,6 @@
 import express from "express"
 import multer from "multer"
-import { allQuestionsById, allTemplates, deletTemplate, getQuestionsNumberByTempName, parseExcel, uploadExcel } from "../controller/TemplateController.js"
+import { allQuestionsById, allTemplates, deletTemplate, getQuestionsNumberByTempName, parseExcel, randomNoOfQuestions, uploadTemplate } from "../controller/TemplateController.js"
 
 
 const router = express.Router()

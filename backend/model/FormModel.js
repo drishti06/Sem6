@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-<<<<<<< Updated upstream
 const FormSchema = Schema({
     form_name: {
         type: String,
@@ -27,10 +26,6 @@ const FormSchema = Schema({
         type: Number,
         required: true
     }
-=======
-const TemplateSchema = Schema({
-
->>>>>>> Stashed changes
 })
 
 export const Form = mongoose.model("forms", FormSchema)

@@ -39,22 +39,6 @@ export const allQuestionsById = async (req, res) => {
     }
 }
 
-<<<<<<< HEAD
-export const getQuestionsNumberByTempName = async (req, res) => {
-    const { name } = req.params
-    // console.log(name)
-    try {
-        const template = await Template.findOne({ temp_name: name }).populate('mcqs');
-        if (!template) {
-            return res.status(404).json({ message: 'Template not found' });
-        }
-        res.status(200).json(template.mcqs.length);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server Error' });
-    }
-};
-=======
 export const randomNoOfQuestions = async (req, res) => {
     const temp_name = req.body.temp_name;
     const number = req.body.number
@@ -116,7 +100,6 @@ export const getQuestionsNumberByTempName = async (req, res) => {
         res.status(400).json(error.message)
     }
 }
->>>>>>> master
 
 export const deletTemplate = async (req, res) => {
     try {
