@@ -33,6 +33,7 @@ function Login() {
           text: 'Logged in'
         })
       }
+      navigate('/form')
     } catch (error) {
       if (error.response && error.response.status >= 400 || error.response.status <= 500) {
         console.log(error)
