@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Login.css'
 import logo from './Logo.jpeg'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 function Login() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -16,36 +17,62 @@ function Login() {
     setIsSignIn((prevIsSignIn) => !prevIsSignIn);
   };
   const baseURl = 'http://localhost:8080/auth'
-  const handleLogin = (e) => {
+
+  const handleLogin = async (e) => {
     e.preventDefault()
     try {
       const data = { username, password }
-      axios.post(`${baseURl}/login`, data)
-        .then((res) => {
-          localStorage.setItem('loggedInUser', res.data.token)
-          localStorage.setItem('loggedInUsername', res.data.username)
-          alert('Logged in Successfuly')
-          navigate('/form')
+      const response = await axios.post(`${baseURl}/login`, data)
+      console.log(response)
+      if (response.status === 200) {
+        localStorage.setItem('loggedInUser', response.data.token)
+        localStorage.setItem('loggedInUsername', response.data.username)
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Logged in'
         })
+      }
     } catch (error) {
-      console.log(error.message)
+      if (error.response && error.response.status >= 400 || error.response.status <= 500) {
+        console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `${error.response.data.message}`,
+        });
+      } else {
+        alert('An error occurred:', error.response.data.message);
+      }
     }
   }
-
-  const handleSignup = (e) => {
-    e.preventDefault()
+  const handleSignup = async (e) => {
+    e.preventDefault();
     try {
-      const data = { username, password, confirmPassword }
-      axios.post(`${baseURl}/signup`, data)
-        .then((res) => {
-          localStorage.setItem('loggedInUser', res.data.token)
-          localStorage.setItem('loggedInUsername', res.data.username)
-          alert('Registered Successfuly')
-          navigate('/form')
+      const data = { username, password, confirmPassword };
+      const response = await axios.post(`${baseURl}/signup`, data)
+      if (response.status === 200) {
+        localStorage.setItem('loggedInUser', response.data.token)
+        localStorage.setItem('loggedInUsername', response.data.username)
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Logged in'
         })
+      }
     } catch (error) {
-      console.log(error.message)
+      if (error.response && error.response.status >= 400 || error.response.status <= 500) {
+        console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `${error.response.data.message}`,
+        });
+      } else {
+        alert('An error occurred:', error.response.data.message);
+      }
     }
+
   }
   return (
     <div className={`wrapper ${isSignIn ? "animated-signin" : "animated-signup"}`}>

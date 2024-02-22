@@ -9,6 +9,10 @@ const TemplateSchema = Schema({
     mcqs: {
         type: Array,
         required: true
+    },
+    createdBy: {
+        type: String,
+        required: true
     }
 })
 

@@ -13,8 +13,7 @@ const UserSchema = Schema({
     },
     confirmPassword: {
         type: String
-    },
-    salt: Buffer
+    }
 },
     {
         timestamps: true
