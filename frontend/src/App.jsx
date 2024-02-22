@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/login' element={<Login />}></Route>
+        <Route path='/' element={<Login />}></Route>
         <Route path='/sidebar' element={<Sidebar />}></Route>
         <Route path='/form' element={<FormItem />}></Route>
         <Route path='/template' element={<Template />}></Route>

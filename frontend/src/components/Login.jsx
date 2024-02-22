@@ -37,11 +37,12 @@ function Login() {
     } catch (error) {
       if (error.response && error.response.status >= 400 || error.response.status <= 500) {
         console.log(error)
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: `${error.response.data.message}`,
-        });
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'Oops...',
+        //   text: `${error.response.data.message}`,
+        // });
+        alert(`${error.response.data.message}`)
       } else {
         alert('An error occurred:', error.response.data.message);
       }
@@ -65,11 +66,12 @@ function Login() {
     } catch (error) {
       if (error.response && error.response.status >= 400 || error.response.status <= 500) {
         console.log(error)
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: `${error.response.data.message}`,
-        });
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'Oops...',
+        //   text: `${error.response.data.message}`,
+        // });
+        alert({ Error: `${error.response.data.message}` })
       } else {
         alert('An error occurred:', error.response.data.message);
       }

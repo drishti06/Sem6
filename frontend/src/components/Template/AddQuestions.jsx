@@ -58,13 +58,19 @@ const AddQuestions = () => {
         setError('');
     };
 
+    const token = localStorage.getItem('loggedInUser')
     const sendToApi = async () => {
         const apiEndpoint = 'http://localhost:8080/api/temp';
         const requestData = {
             temp_name: templateName,
             mcqs: submittedQuestions,
+
         };
-        await axios.post(apiEndpoint, requestData)
+        await axios.post(apiEndpoint, requestData, {
+            headers: {
+                "Authorization": 'Bearer ' + token
+            }
+        })
             .then((response) => {
                 console.log('API Response:', response.data);
                 setSubmittedQuestions([]);
