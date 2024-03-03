@@ -13,7 +13,6 @@ export const parseExcel = async (req, res) => {
 export const uploadTemplate = async (req, res) => {
     try {
         const { temp_name, mcqs } = req.body
-        const { token } = req.headers['authorization']
         const data = await Template.create({ temp_name, mcqs })
         res.status(200).json(data)
     } catch (error) {

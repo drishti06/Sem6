@@ -48,7 +48,7 @@ function Sidebar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
   React.useEffect(() => {
     if (!user) {
-      navigate('/login')
+      navigate('/')
     }
   }, [])
   return (

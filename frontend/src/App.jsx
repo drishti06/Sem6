@@ -22,6 +22,7 @@ function App() {
         <Route path='/allForms' element={<AllForm />}></Route>
       </Routes>
     </Router>
+    // <ExamForm />
   );
 }
 
