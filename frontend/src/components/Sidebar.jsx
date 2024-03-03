@@ -11,7 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import myImage from './Logo.jpeg'
 import Template from "../components/Template/Template"
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link } from 'react-router-dom';
 import AddQuestions from './Template/AddQuestions';
 import FormItem from './Form/FormItem';
 import "./Sidebar.css"
@@ -36,9 +36,9 @@ function Sidebar(props) {
       </div>
       <Toolbar />
       <div className='list'>
+        <a href='/allForms'>Show Forms</a>
         <a href="/form">Forms</a>
         <a href='/template'>Templates</a>
-        <a href='/allForms'>Show Forms</a>
       </div>
       <Divider />
     </div>
@@ -76,9 +76,11 @@ function Sidebar(props) {
               <span>Welcome:</span>
               <span>{user}</span>
             </div>
+            
             <button onClick={() => {
               localStorage.removeItem("loggedInUser")
               localStorage.removeItem("loggedInUsername")
+              navigate('/')
             }} className='btn'>Logout</button>
           </Typography>
         </Toolbar>

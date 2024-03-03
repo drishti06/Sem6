@@ -8,6 +8,9 @@ function Email(props) {
   const [emails, setEmails] = React.useState([]);
   const [focused, setFocused] = React.useState(false);
   console.log(emails)
+  React.useEffect(() => {
+   props.Email(emails)
+  }, [emails])
   return (
     <>
       <h3>Email</h3>

@@ -5,10 +5,15 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 
-export default function DateTime() {
+export default function DateTime(props) {
     const [startDate, setstartDate] = React.useState(null);
     const [endDate, setendDate] = React.useState(null);
-    
+    React.useEffect(() => {
+      props.date({
+        start: startDate,
+        end: endDate
+      })
+     }, [startDate,endDate])
   // Handle change in the DateTimePicker value
   const handleDateChangeStart = (date) => {
     setstartDate(date);

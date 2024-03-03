@@ -9,7 +9,6 @@ function Login() {
   const [isSignIn, setIsSignIn] = useState(true);
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [email, setEmail] = useState('')
   const [confirmPassword, setConfrimPassword] = useState('')
   const navigate = useNavigate()
 
@@ -33,7 +32,7 @@ function Login() {
           text: 'Logged in'
         })
       }
-      navigate('/form')
+      navigate('/allForms')
     } catch (error) {
       if (error.response && error.response.status >= 400 || error.response.status <= 500) {
         console.log(error)
@@ -62,7 +61,7 @@ function Login() {
           text: 'Logged in'
         })
       }
-      navigate('/form')
+      navigate('/allForms')
     } catch (error) {
       if (error.response && error.response.status >= 400 || error.response.status <= 500) {
         console.log(error)

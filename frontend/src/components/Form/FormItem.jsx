@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DateTime from "../Form/DateTime";
 import Sidebar from "../Sidebar";
+// import { Email } from "@mui/icons-material";
+import Email from "./Email";
+import Swal from 'sweetalert2'
 
 function FormItem() {
   const [percent, setPercent] = useState(0);
-  const [mcq, setMcq] = useState({
-    question: 0,
-    marks: 0
-  });
   const [total, setTotal] = useState(0);
   const [tempName, setTempName] = useState([]);
   const [totTemp, setTotTemp] = useState([]);
@@ -17,8 +16,13 @@ function FormItem() {
   const [marksPerQuestion, setMarksPerQuestion] = useState(0);
   const [error, setError] = useState('')
   const [selectedQuestions, setSelectedQuestions] = useState(0); // Newly added state for selected number of questions
-
+  const [email, setemail] = useState([])
+  const [date, setdate] = useState()
   const baseURL = 'http://localhost:8080';
+  useEffect(() => {
+    const totalMarks = selectedQuestions * marksPerQuestion;
+    setTotal(totalMarks);
+  }, [totQues,marksPerQuestion])
 
   const tempApi = async () => {
     try {
@@ -60,11 +64,26 @@ function FormItem() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Calculate total marks based on selected questions and marks per question
-    const totalMarks = selectedQuestions * marksPerQuestion;
-    setTotal(totalMarks);
+    try {
+      const response = await axios.get(`${baseURL}/form/createForm/${""}`);
+      
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Logged in'
+        })
+      } else {
+        
+      }
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+ 
+    
   };
 
   const handleInputChange1 = (e) => {
@@ -165,7 +184,8 @@ function FormItem() {
               {isNaN(percent) ? 0 : Math.round(((percent / total) * 100), 2)}%
             </span>
           </div>
-          <DateTime />
+          <DateTime date={setdate}/>
+          <Email Email={setemail} />
           <div className="col-12">
             <br />
             <button type="submit" className="btn btn-primary text-center">

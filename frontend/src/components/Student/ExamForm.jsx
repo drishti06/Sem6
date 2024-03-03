@@ -39,15 +39,15 @@ const ExamForm = () => {
     }
 
     const handleSubmitAnswers = () => {
-        if (examAns.some(answer => answer === '')) {
-            setErrorMessage('Please answer all questions before submitting.');
-            return;
-        }
+        // if (examAns.some(answer => answer === '')) {
+        //     setErrorMessage('Please answer all questions before submitting.');
+        //     return;
+        // }
 
-        if (studentName === '') {
-            setErrorMessage('Please enter your name before submitting.');
-            return;
-        }
+        // if (studentName === '') {
+        //     setErrorMessage('Please enter your name before submitting.');
+        //     return;
+        // }
 
         setSubmitting(true);
 
@@ -67,7 +67,7 @@ const ExamForm = () => {
 
     return (
         <div className="exam-wrapper">
-            <div class="input-group mb-3">
+            <div className="input-group mb-3">
                 <input type="text" className='form-control' placeholder="Enter exam name" onChange={(e) => { setExamName(e.target.value) }} name='exam_name' />
                 <button className='btn btn-primary' onClick={handleExamForm}>Load</button>
             </div>
@@ -78,7 +78,7 @@ const ExamForm = () => {
                         <span>Exam: {exam}</span>
                         <span>Subject: {subName}</span>
                     </div>
-                    <div class="input-group mb-3">
+                    <div className="input-group mb-3">
                         <input type="text" className='form-control' placeholder="Enter exam name" onChange={(e) => { setExamName(e.target.value) }} name='exam_name' />
                         <input type="text" className='form-control' placeholder="Enter Seat No" onChange={(e) => { setExamName(e.target.value) }} name='exam_name' />
                         <input type="text" className='form-control' placeholder="Enter Roll No" onChange={(e) => { setExamName(e.target.value) }} name='exam_name' />
