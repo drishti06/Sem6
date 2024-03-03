@@ -1,110 +1,121 @@
-import React,{useState} from "react";
+import React, { useEffect, useState } from "react";
 import './Login.css'
-import logoPng from './logo.png'
-import { style } from "@mui/system";
-// import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import logo from './Logo.jpeg'
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
-function Login(props) {
+function Login() {
   const [isSignIn, setIsSignIn] = useState(true);
-  const [loginData, setloginData] = useState({
-    name:"",
-  email:"",
-  password:""
-});
-// const navigate = useNavigate()
-//   const history = useHistory();
-const handleSwitchForm = () => {
-  setIsSignIn((prevIsSignIn) => !prevIsSignIn);
-};
-const baseURL= 'http://localhost:8080'
-// const header ={
-//   "ngrok-skip-browser-warning": true
-// }
-const handleForm=async(e)=>{
-   console.log(loginData);
-   e.preventDefault();
-  if (!isSignIn) {
-      const response= await axios.post(`${baseURL}/api/register`, loginData)
-   .then(function (response) {
-      // localStorage.setItem("token",response.data.token);
-      console.log(response.data);
-      handleSwitchForm();
-      
-      
-  })
-  .catch(function (error) {
-      console.log(error);
-      alert(error.msg);
-  });
-}else{ 
-  const response= await axios.post(`${baseURL}/api/login`, loginData)
-  .then(function (response) {
-      localStorage.setItem("token",response.data.token);
-      console.log(response.data.token);
-      // navigate('/Form/TotalForm');
-      props.loginState(isSignIn);
-      //  navigate('/');
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [confirmPassword, setConfrimPassword] = useState('')
+  const navigate = useNavigate()
 
-      })
-      .catch(function (error) {
-          console.log(error);
-          alert(error.msg);
-      });}
-      setloginData({
-        name:"",
-      email:"",
-      password:""
-    });
-}
+  const handleSwitchForm = () => {
+    setIsSignIn((prevIsSignIn) => !prevIsSignIn);
+  };
+  const baseURl = 'http://localhost:8080/auth'
 
- 
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    try {
+      const data = { username, password }
+      const response = await axios.post(`${baseURl}/login`, data)
+      console.log(response)
+      if (response.status === 200) {
+        localStorage.setItem('loggedInUser', response.data.token)
+        localStorage.setItem('loggedInUsername', response.data.username)
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Logged in'
+        })
+      }
+      navigate('/form')
+    } catch (error) {
+      if (error.response && error.response.status >= 400 || error.response.status <= 500) {
+        console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `${error.response.data.message}`,
+        });
+        // alert(`${error.response.data.message}`)
+      } else {
+        alert('An error occurred:', error.response.data.message);
+      }
+    }
+  }
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      const data = { username, password, confirmPassword };
+      const response = await axios.post(`${baseURl}/signup`, data)
+      if (response.status === 200) {
+        localStorage.setItem('loggedInUser', response.data.token)
+        localStorage.setItem('loggedInUsername', response.data.username)
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Logged in'
+        })
+      }
+      navigate('/form')
+    } catch (error) {
+      if (error.response && error.response.status >= 400 || error.response.status <= 500) {
+        console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `${error.response.data.message}`,
+        });
+        // alert({ Error: `${error.response.data.message}` })
+      } else {
+        alert('An error occurred:', error.response.data.message);
+      }
+    }
 
+  }
   return (
-    <div className="body">
-      <div className="logo d-flex">
-        <img src={logoPng} alt="" />
-        <h1>
-          
-          formjam </h1>
+    <div className={`wrapper ${isSignIn ? "animated-signin" : "animated-signup"}`}>
+      <div className="logoo">
+        <img src={logo} alt="" />
       </div>
-      <div className="loginBlock">
-    <div
-      className={`wrapper  ${isSignIn ? "animated-signin" : "animated-signup"}`}
-    >
       <div className={`form-container ${isSignIn ? "sign-in" : "sign-up"}`}>
-        <form onSubmit={handleForm} className='form'>
+        <form className="form" action="#">
           <h2>{isSignIn ? "Login" : "Sign Up"}</h2>
           <div className="form-group">
-            <input type="text" required onChange={(e) => setloginData({ ...loginData, name: e.target.value })}/>
+            <input onChange={(e) => setUsername(e.target.value)} type="text" required placeholder="Enter Username" />
             <i className="fas fa-user"></i>
             <label htmlFor="">Username</label>
           </div>
-          {isSignIn || (
+          {/* {isSignIn || (
             <div className="form-group">
-              <input type="email" required onChange={(e) => setloginData({ ...loginData, email: e.target.value })}/>
+              <input onChange={(e) => setEmail(e.target.value)} type="email" required placeholder="Enter Email" />
               <i className="fas fa-at"></i>
               <label htmlFor="">Email</label>
             </div>
-          )}
+          )} */}
           <div className="form-group">
-            <input type="password" required onChange={(e) => setloginData({ ...loginData, password: e.target.value })}/>
+            <input onChange={(e) => setPassword(e.target.value)} type="password" required placeholder="Enter Password" />
             <i className="fas fa-lock"></i>
             <label htmlFor="">Password</label>
           </div>
           {!isSignIn && (
             <div className="form-group">
-              <input type="password" required />
+              <input onChange={(e) => setConfrimPassword(e.target.value)} type="password" required placeholder=" Confirm Password" />
               <i className="fas fa-lock"></i>
               <label htmlFor="">Confirm Password</label>
             </div>
           )}
           {isSignIn ? (
-            <button type="submit" className="btn">
+            <button onClick={handleLogin} type="submit" className="sub-btn btn">
               Login
             </button>
           ) : (
-            <button type="submit" className="btn">
+            <button onClick={handleSignup} type="submit" className="sub-btn btn">
               Sign Up
             </button>
           )}
@@ -122,8 +133,6 @@ const handleForm=async(e)=>{
           </div>
         </form>
       </div>
-    </div>
-    </div>
     </div>
   );
 }

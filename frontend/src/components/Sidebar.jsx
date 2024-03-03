@@ -1,5 +1,5 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import Login from "./Login.jsx"
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,39 +11,46 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import myImage from './Logo.jpeg'
 import Template from "../components/Template/Template"
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import AddQuestions from './Template/AddQuestions';
 import FormItem from './Form/FormItem';
 import "./Sidebar.css"
+import ExamForm from './Student/ExamForm.jsx';
+import AllForm from './Form/AllForm.jsx';
 const drawerWidth = 240;
 
 function Sidebar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const navigate = useNavigate()
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const user = localStorage.getItem('loggedInUsername')
   const drawer = (
     <div>
       <div className='logo' onClick={() => (<Navigate to="/"></Navigate>)}>
         <img src={myImage} alt="Website Logo" className='logo-img' />
       </div>
       <Toolbar />
-      {/* <Divider /> */}
       <div className='list'>
         <a href="/form">Forms</a>
         <a href='/template'>Templates</a>
+        <a href='/allForms'>Show Forms</a>
       </div>
       <Divider />
-
     </div>
   );
 
   // Remove this const when copying and pasting into your project.
   const container = window !== undefined ? () => window().document.body : undefined;
-
+  React.useEffect(() => {
+    if (!user) {
+      navigate('/')
+    }
+  }, [])
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -64,8 +71,15 @@ function Sidebar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Welcome
+          <Typography className='nav' variant="h6" noWrap component="div">
+            <div className='username'>
+              <span>Welcome:</span>
+              <span>{user}</span>
+            </div>
+            <button onClick={() => {
+              localStorage.removeItem("loggedInUser")
+              localStorage.removeItem("loggedInUsername")
+            }} className='btn'>Logout</button>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -106,13 +120,7 @@ function Sidebar(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        <BrowserRouter>
-          <Routes>
-            <Route path='/form' element={<FormItem />}></Route>
-            <Route path='/template' element={<Template />}></Route>
-            <Route path='/addQuestions' element={<AddQuestions />}></Route>
-          </Routes>
-        </BrowserRouter>
+        {/* <Template /> */}
       </Box>
     </Box>
   );

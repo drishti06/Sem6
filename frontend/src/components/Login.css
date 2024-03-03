@@ -1,266 +1,52 @@
-/* Login.module.css */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-:root {
-    --mainColor: #362189;
-    --whiteColor: #ffffff;
-    --titleColor: #555555;
-    --labelColor: #333333;
-}
-
 .wrapper {
-    position: relative;
-    width: 35rem;
-    height: 50rem;
+  background: linear-gradient(45deg, rgb(207, 108, 124), rgb(143, 15, 143));
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
 }
-
-@media(min-width: 540px) {
-    .wrapper {
-        /* width: 40rem; */
-    }
-}
-
-.wrapper .form-container {
-    position: absolute;
-    top: 10%;
-    left: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-    height: 80%;
-    background-color: var(--whiteColor);
-    border-radius: .5rem;
-    box-shadow: 0 0 1rem 0 rgba(0 0 0 / .2);
-}
-
-.wrapper .form-container form h2 {
-    font-size: 1.5rem;
-    text-align: center;
-    text-transform: capitalize;
-    color: var(--titleColor);
-}
-
-.wrapper .form-container form .form-group {
-    position: relative;
-    width: 100%;
-    margin: 0.6rem 0;
-}
-
-.wrapper .form-container form .form-group i,
-.wrapper .form-container form .form-group label {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    text-transform: capitalize;
-    color: var(--labelColor);
-    /* padding: 0 .5rem; */
-    pointer-events: none;
-    transition: all .5s ease;
-}
-
-.wrapper .form-container form .form-group i {
-    left: .5rem;
-}
-
-.wrapper .form-container form .form-group label {
-    left: 2.5rem;
-}
-
-.wrapper .form-container form .form-group input {
-    width: 100%;
-    height: 2rem;
-    padding: 0 1rem;
-    border-radius: .5rem;
-    border: none;
-    outline: none;
-    border: .1rem solid var(--labelColor);
-    font-size: 1rem;
-    color: var(--labelColor);
-    background: transparent;
-}
-
-form .form-group input:focus~label,
-form .form-group input:valid~label,
-form .form-group input:focus~i,
-form .form-group input:valid~i {
-    top: 0 !important;
-    font-size: 1rem !important;
-    background-color: var(--whiteColor);
-}
-
-.wrapper .form-container form .forgot-pass {
-    margin: -1.5rem 0 1.5rem;
-}
-
-.wrapper .form-container form .forgot-pass a {
-    color: var(--labelColor);
-    text-decoration: none;
-    font-size: 1.4rem;
-    text-transform: capitalize;
-    transform: all .5s ease;
-}
-
-.wrapper .form-container form .forgot-pass a:hover {
-    color: var(--mainColor);
-}
-
-.wrapper .form-container form .btn {
-    background: linear-gradient(to right, #da4453, var(--mainColor));
-    color: var(--whiteColor);
-    text-transform: capitalize;
-    width: 100%;
-    height: 2.5rem;
-    font-size: 1.3rem;
-    font-weight: 500;
-    outline: none;
-    border: none;
-    border-radius: .5rem;
-    cursor: pointer;
-    box-shadow: 0 .2rem 1rem rgba(0 0 0 / .4);
-}
-
-.wrapper .form-container form .link {
-    text-align: center;
-    font-size: 1.1rem;
-    color: var(--labelColor);
-    margin: 2.5rem 0;
-}
-.form{
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
-}
-.wrapper .form-container form .link a {
-    text-transform: capitalize;
-    color: var(--mainColor);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all .5s ease;
-}
-
-.wrapper .form-container form .link a:hover {
-    color: #da4453;
-}
-
-.wrapper .sign-up {
-    transform: rotate(7deg);
-}
-
-.wrapper.animated-signin .form-container.sign-in {
-    animation: signin-flip 1s ease-in-out forwards;
-}
-
-@keyframes signin-flip {
-    0% {
-        transform: translateX(0);
-    }
-
-    50% {
-        transform: translateX(-50rem) scale(1.1);
-    }
-
-    100% {
-        transform: translateX(0) rotate(7deg) scale(1);
-    }
-}
-
-
-/* ... (Previous code) ... */
-
-.wrapper.animated-signin .form-container.sign-up {
-    animation: rotatecard .7s ease-in-out forwards;
-}
-
-@keyframes rotatecard {
-    0% {
-        transform: rotate(7deg);
-    }
-
-    100% {
-        transform: rotate(0);
-        z-index: 1;
-    }
-}
-
-.wrapper.animated-signup .form-container.sign-up {
-    animation: signup-flip 1s ease-in-out forwards;
-}
-
-@keyframes signup-flip {
-    0% {
-        transform: translateX(0);
-        z-index: 1;
-    }
-
-    50% {
-        transform: translateX(50rem) scale(1.1);
-    }
-
-    100% {
-        transform: translateX(0) rotate(7deg) scale(1);
-    }
-}
-
-.wrapper.wrapper.animated-signup .form-container.sign-in {
-    transform: rotate(7deg);
-    animation: rotatecard .7s ease-in-out forwards;
-    animation-delay: .3s;
-}
-
-@keyframes rotatecard {
-    0% {
-        transform: rotate(7deg);
-    }
-
-    100% {
-        transform: rotate(0);
-        z-index: 1;
-    }
-}
-
-/* Add any additional styling specific to your Login component below */
-
-.body {
-    background: linear-gradient(to right, #da4453, var(--mainColor));
-    font-weight: 400;
-    min-height: 100vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-    /* margin-right: 10%;
-    margin-top: 5%; */
-    padding-right:10% ;
-    /* padding-top: 5%; */
-}
-
 .logo {
-    display: flex;
-    align-items: center;filter: drop-shadow(2px 4px 8px hsla(0deg, 0%, 0%, 0.5))
+  display: flex;
+  align-items: center;
+  width: 450px;
+  height: 400px;
 }
 
-.logo>img {
-    margin-right: 10px;
+.logoo > img {
+  width: 450px;
+  height: 450px;
+  border-radius: 10px;
+}
+.form-container {
+  border: 2px solid transparent;
+  background: linear-gradient(-45deg, rgb(215, 106, 124), rgb(164, 18, 164));
+  padding: 2rem;
+  border-radius: 10px;
 }
 
-.logo>h1 {
-    font-size: 6vw;
-    color: #fff;
-    font-weight: bold;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.loginBlock {
-    width: 70%;
-    max-width: 600px; /* Adjust the max-width as needed */
-    margin: 0 auto; /* Center the block horizontally */
-    height: 87vh; /* Make it fill the entire height of the viewport */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.form-group {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 4px;
 }
 
-/* ... (Any additional styles for your Login component) ... */
+.form-group > input {
+  border-radius: 10px;
+  border: 1px solid pink;
+  padding: 5px 10px;
+  background-color: transparent;
+}
+
+.form-group > input::placeholder {
+  color: pink;
+}
+
+.sub-btn {
+  border: 1px solid white;
+}
