@@ -20,9 +20,10 @@ const AllForm = () => {
             <div style={{ paddingTop: '5rem' }}>
                 <span>Forms</span>
                 {forms.map((form, index) => (
-                    <div className="forms" >
+                    <div className="forms" key={index}>
                         <div key={index} className='forms-wrapper'>
-                            <div>{index + 1}. {form.form_name}
+                            <div>
+                                <div>{index + 1}. {form.form_name}</div>
                                 <button type="button" className="btn btn-primary form-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     Show details
                                 </button>
@@ -33,7 +34,7 @@ const AllForm = () => {
                                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div className="modal-body" >
-                                                Details will be shown here
+                                                will be shown here
                                             </div>
                                             <div className="modal-footer">
                                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>

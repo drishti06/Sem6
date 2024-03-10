@@ -4,7 +4,7 @@ import DateTime from "../Form/DateTime";
 import Sidebar from "../Sidebar";
 // import { Email } from "@mui/icons-material";
 import Email from "./Email";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 function FormItem() {
   const [percent, setPercent] = useState(0);
@@ -14,15 +14,15 @@ function FormItem() {
   const [totQues, setTotQues] = useState(0);
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [marksPerQuestion, setMarksPerQuestion] = useState(0);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
   const [selectedQuestions, setSelectedQuestions] = useState(0); // Newly added state for selected number of questions
-  const [email, setemail] = useState([])
-  const [date, setdate] = useState()
-  const baseURL = 'http://localhost:8080';
+  const [email, setemail] = useState([]);
+  const [date, setdate] = useState();
+  const baseURL = "http://localhost:8080";
   useEffect(() => {
     const totalMarks = selectedQuestions * marksPerQuestion;
     setTotal(totalMarks);
-  }, [totQues,marksPerQuestion])
+  }, [totQues, marksPerQuestion]);
 
   const tempApi = async () => {
     try {
@@ -41,7 +41,9 @@ function FormItem() {
 
   const handleTemplateChange = async (selectedTemplate) => {
     try {
-      const response = await axios.get(`${baseURL}/api/template/${selectedTemplate}`);
+      const response = await axios.get(
+        `${baseURL}/api/template/${selectedTemplate}`
+      );
       const templateData = response.data;
       if (templateData) {
         setTotQues(templateData);
@@ -68,22 +70,18 @@ function FormItem() {
     e.preventDefault();
     try {
       const response = await axios.get(`${baseURL}/form/createForm/${""}`);
-      
+
       if (response.status === 200) {
         Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'Logged in'
-        })
+          icon: "success",
+          title: "Success",
+          text: "Logged in",
+        });
       } else {
-        
       }
-      
     } catch (error) {
       console.log(error.message);
     }
- 
-    
   };
 
   const handleInputChange1 = (e) => {
@@ -91,13 +89,17 @@ function FormItem() {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: "flex" }}>
       <Sidebar />
-      <div style={{
-        paddingTop: '5rem',
-        width: '75 %'
-      }} className="container">
-        < form onSubmit={handleSubmit} >
+      <div
+        style={{
+          paddingTop: "5rem",
+          width: "100 %",
+          paddingBottom: "2rem"
+        }}
+        className="container"
+      >
+        <form onSubmit={handleSubmit}>
           <div className="input mb-3">
             <span className="input-text" id="inputGroup-sizing-default">
               Enter Exam Name
@@ -106,11 +108,13 @@ function FormItem() {
               type="text"
               className="form-control"
               aria-label="Sizing example input"
-              name='examName'
+              name="examName"
               aria-describedby="inputGroup-sizing-default"
             />
           </div>
-          <label htmlFor="templet-Select">Total No of templates : {totTemp}</label>
+          <label htmlFor="templet-Select">
+            Total No of templates : {totTemp}
+          </label>
           <br />
           <span></span>
           <select
@@ -119,10 +123,10 @@ function FormItem() {
             id="templet-Select"
             label="Select one"
             onChange={(e) => handleTemplateChange(e.target.value)}
-          >            <option value="">Select a Template</option>
-
-            {tempName.map((name) =>
-            (
+          >
+            {" "}
+            <option value="">Select a Template</option>
+            {tempName.map((name) => (
               <option key={name} value={name}>
                 {name}
               </option>
@@ -132,7 +136,9 @@ function FormItem() {
             <h5 className="card-header">Total:{totQues}</h5>
             <div className="card-body">
               <div className="input-group mb-3">
-                <span className="input-group-text" id="inputGroup-sizing-small">Questions</span>
+                <span className="input-group-text" id="inputGroup-sizing-small">
+                  Questions
+                </span>
                 <input
                   type="text"
                   className="form-control"
@@ -142,7 +148,9 @@ function FormItem() {
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
                 />
-                <span className="input-group-text" id="inputGroup-sizing-small">Marks Per Question</span>
+                <span className="input-group-text" id="inputGroup-sizing-small">
+                  Marks Per Question
+                </span>
                 <input
                   type="text"
                   className="form-control"
@@ -153,16 +161,14 @@ function FormItem() {
                   aria-describedby="inputGroup-sizing-default"
                 />
               </div>
-              {
-                error && (
-                  <div>
-                    <span style={{ color: 'red' }}>{error}</span>
-                    <p style={{ color: 'white' }}>
-                      {setTimeout(() => setError(''), 2000)}
-                    </p>
-                  </div>
-                )
-              }
+              {error && (
+                <div>
+                  <span style={{ color: "red" }}>{error}</span>
+                  <p style={{ color: "white" }}>
+                    {setTimeout(() => setError(""), 2000)}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
           <br />
@@ -181,10 +187,10 @@ function FormItem() {
               aria-describedby="basic-addon2"
             />
             <span className="input-group-text" id="basic-addon2">
-              {isNaN(percent) ? 0 : Math.round(((percent / total) * 100), 2)}%
+              {isNaN(percent) ? 0 : Math.round((percent / total) * 100, 2)}%
             </span>
           </div>
-          <DateTime date={setdate}/>
+          <DateTime date={setdate} />
           <Email Email={setemail} />
           <div className="col-12">
             <br />
@@ -193,8 +199,8 @@ function FormItem() {
             </button>
           </div>
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
 
