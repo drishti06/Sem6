@@ -15,7 +15,7 @@ const AllForm = () => {
     }, [])
 
     return (
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', paddingLeft: '2rem' }}>
             <Sidebar />
             <div style={{ paddingTop: '5rem' }}>
                 <span>Forms</span>

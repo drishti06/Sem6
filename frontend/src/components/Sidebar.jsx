@@ -52,7 +52,7 @@ function Sidebar(props) {
     }
   }, [])
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -76,7 +76,7 @@ function Sidebar(props) {
               <span>Welcome:</span>
               <span>{user}</span>
             </div>
-            
+
             <button onClick={() => {
               localStorage.removeItem("loggedInUser")
               localStorage.removeItem("loggedInUsername")

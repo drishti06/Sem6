@@ -40,17 +40,14 @@ export const allQuestionsById = async (req, res) => {
 }
 
 export const randomNoOfQuestions = async (req, res) => {
-    const temp_name = req.body.temp_name;
-    const number = req.body.number
-
     try {
+        const temp_name = req.body.temp_name;
+        const number = req.body.number
         // Find the template in the database
         const template = await Template.findOne({ temp_name: temp_name });
-
         if (!template) {
             res.status(404).json(`Template with name "${temp_name}" not found`);
         }
-
         // Get all MCQs from the template
         const mcqs = template.mcqs;
 

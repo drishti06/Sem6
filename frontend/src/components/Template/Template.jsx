@@ -5,6 +5,8 @@ import axios from 'axios';  // Import Axios
 import { Link } from 'react-router-dom';
 import "./Template.css"
 import Sidebar from '../Sidebar';
+import Swal from 'sweetalert2'
+
 const Template = () => {
     const [file, setFile] = useState(null);
     const [selectedOption, setSelectedOption] = useState('file');
@@ -23,16 +25,23 @@ const Template = () => {
         e.preventDefault()
         try {
             if (!file) {
-                console.error('No file selected');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'No File Selected',
+                    text: 'Choose file'
+                })
                 return;
             }
             const formData = new FormData();
             formData.append('csvFile', file);
             const response = await axios.post(`${baseURL}/api/excel`, formData).then((res) => {
                 setMcqs(res.data)
-                alert(res.data.message)
+                Swal.fire({
+                    icon: 'success',
+                    text: 'File is parsed!'
+                })
             })
-            // console.log(mcqs)
+
         } catch (error) {
             console.error('Error uploading file:', error);
         }
@@ -42,7 +51,10 @@ const Template = () => {
     const handleTempSubmit = async (e) => {
         e.preventDefault()
         if (!temp_name || !file) {
-            console.log('Template name and file are required.');
+            Swal.fire({
+                icon: 'error',
+                text: 'Template name and File both is required'
+            })
             return;
         }
         try {
@@ -52,7 +64,10 @@ const Template = () => {
             };
             // console.log(templateData)
             const upload = await axios.post(`${baseURL}/api/temp`, templateData).then((res) => [
-                console.log(res.data)
+                Swal.fire({
+                    icon: 'success',
+                    text: `${temp_name} Template is added`
+                })
             ])
         } catch (error) {
             console.log(error)
@@ -103,20 +118,17 @@ const Template = () => {
         tempApi();
     }, [])
 
+    // console.log(tmplates)
 
     return (
         <div style={{ display: 'flex' }}>
             <Sidebar />
-            <div style={{
-                width: '75%', paddingTop: '5rem'
-            }}>
-                <Fab color="primary" id="floating-button" aria- label="add" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <div style={{ width: '75%', paddingTop: '5rem' }}>
+                <Fab color="primary" id="floating-button" label="add" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <AddIcon onClick={() => setOpen(true)} />
                 </Fab >
                 <div className="container">
-                    {totForm ? <span >Total Number of templates are : {totForm}</span> : <span>No templates yet to show</span>}
-
-                    {tmplates?.map((data, index) => {
+                    {totForm ? <span >Total Number of templates are : {totForm}</span> : <span>No templates yet to show</span>}                    {tmplates?.map((data, index) => {
                         return (
                             <div key={index} className="card" style={{ margin: '1rem 0' }}>
                                 <div className="card-header">{data.temp_name}</div>
@@ -160,7 +172,6 @@ const Template = () => {
                                                 <strong>
                                                     <span>Ans. {que.Solution}</span>
                                                 </strong>
-
                                             </div>
                                         </div>
                                     </div>

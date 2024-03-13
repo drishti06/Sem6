@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import DateTime from "../Form/DateTime";
 import Sidebar from "../Sidebar";
 // import { Email } from "@mui/icons-material";
@@ -18,7 +20,9 @@ function FormItem() {
   const [selectedQuestions, setSelectedQuestions] = useState(0); // Newly added state for selected number of questions
   const [email, setemail] = useState([]);
   const [date, setdate] = useState();
+  const [prevQ, setPrevQ] = useState([])
   const baseURL = "http://localhost:8080";
+
   useEffect(() => {
     const totalMarks = selectedQuestions * marksPerQuestion;
     setTotal(totalMarks);
@@ -56,6 +60,30 @@ function FormItem() {
       console.log(error.message);
     }
   };
+
+  const handlePreviewQuestions = () => {
+    const data = {
+      temp_name: selectedTemplate,
+      number: selectedQuestions
+    }
+    console.log(data.temp_name)
+    if (data.temp_name == '' || data.number == 0) {
+      Swal.fire({
+        icon: 'error',
+        text: 'Select both, "Template" and choose number of "Questions" to preview'
+      })
+    }
+    else {
+      try {
+        axios.post(`${baseURL}/api/randomQuestions`, data).then((res) => {
+          console.log(res.data)
+          setPrevQ(res.data)
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
   const handleQuestionChange = (e) => {
     const selected = parseInt(e.target.value);
@@ -133,7 +161,7 @@ function FormItem() {
             ))}
           </select>
           <div className="card">
-            <h5 className="card-header">Total:{totQues}</h5>
+            <h5 className="card-header">Total Questions:{totQues}</h5>
             <div className="card-body">
               <div className="input-group mb-3">
                 <span className="input-group-text" id="inputGroup-sizing-small">
@@ -172,6 +200,44 @@ function FormItem() {
             </div>
           </div>
           <br />
+          <div>
+            <button type="button" onClick={handlePreviewQuestions} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Preview Questions
+            </button>
+            <div style={{ paddingTop: '5rem' }} className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-body">
+                    {
+                      prevQ.map((data, index) => {
+                        return (
+                          <div key={index} style={{ display: 'flex', flexDirection: 'column' }}>
+                            <strong>
+                              <span>{index + 1}. {data.Question}</span>
+                            </strong>
+                            <span>A. {data.A}</span>
+                            <span>B. {data.B}</span>
+                            <span>C. {data.C}</span>
+                            <span>D. {data.D}</span>
+                            <strong>
+                              <span>Ans. {data.Solution}</span>
+                            </strong>
+                            <br />
+                          </div>
+
+                        )
+                      })
+                    }
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+
           <h3>Total Marks: {total}</h3>
           <div className="input-group mb-3">
             <span className="input-group-text" id="inputGroup-sizing-small">
@@ -190,8 +256,8 @@ function FormItem() {
               {isNaN(percent) ? 0 : Math.round((percent / total) * 100, 2)}%
             </span>
           </div>
-          <DateTime date={setdate} />
-          <Email Email={setemail} />
+          {/* <DateTime date={setdate} /> */}
+          {/* <Email Email={setemail} /> */}
           <div className="col-12">
             <br />
             <button type="submit" className="btn btn-primary text-center">
