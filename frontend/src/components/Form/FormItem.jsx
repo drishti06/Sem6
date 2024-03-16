@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 function FormItem() {
   const [percent, setPercent] = useState(0);
   const [total, setTotal] = useState(0);
+  const [passing_marks, setPassingMarks] = useState(0);
   const [tempName, setTempName] = useState([]);
   const [totTemp, setTotTemp] = useState([]);
   const [totQues, setTotQues] = useState(0);
@@ -94,28 +95,61 @@ function FormItem() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.get(`${baseURL}/form/createForm/${""}`);
-
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Logged in",
-        });
-      } else {
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   const handleInputChange1 = (e) => {
+    console.log(e.target.value)
+    setPassingMarks(e.target.value)
     setPercent(e.target.value);
   };
 
+  const [examFormName, setExamFormName] = useState('')
+  // This function is used to create ExamForm
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const data = {
+        formItems: {
+          form_name: examFormName,
+          template_name: selectedTemplate,
+          total_mcqs: prevQ,
+          no_of_mcqs: totQues,
+          total_marks: total,
+          passing_marks: 0
+        }
+      }
+      const requiredFields = ['form_name', 'template_name', 'total_mcqs', 'no_of_mcqs', 'total_marks'];
+      const missingFields = requiredFields.filter(field => !data.formItems[field]);
+      if (missingFields.length > 0) {
+        const errorMessage = `Please fill in the following fields:<br>${missingFields.join('<br>')}`;
+        Swal.fire({
+          icon: 'error',
+          title: 'Missing Fields',
+          html: errorMessage,
+        });
+        return;
+      }
+      const resp = await axios.post(`${baseURL}/form/createForm`, data)
+      console.log(resp)
+      if (resp.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Form Submitted",
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          text: 'Error in form submission'
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      Swal.fire({
+        icon: 'error',
+        text: `${error.response.data}`
+      })
+    }
+  }
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
@@ -137,6 +171,7 @@ function FormItem() {
               className="form-control"
               aria-label="Sizing example input"
               name="examName"
+              onChange={(e) => { setExamFormName(e.target.value) }}
               aria-describedby="inputGroup-sizing-default"
             />
           </div>
