@@ -3,12 +3,9 @@ import { Form } from "../model/FormModel.js"
 export const newForm = async (req, res) => {
     try {
         const { formItems } = req.body
-        console.log(formItems)
         const form_name = req.body.formItems.form_name
-        // console.log(form_name)
         if (await Form.findOne({ form_name: form_name })) {
             res.status(500).json("Form already exist!")
-            // console.log('already exist')
         } else {
             const form = await Form.create(formItems)
             res.status(200).json(form)

@@ -103,6 +103,7 @@ function FormItem() {
   };
 
   const [examFormName, setExamFormName] = useState('')
+  // console.log(localStorage.getItem('loggedInUsername'))
   // This function is used to create ExamForm
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -114,10 +115,11 @@ function FormItem() {
           total_mcqs: prevQ,
           no_of_mcqs: totQues,
           total_marks: total,
-          passing_marks: 0
+          passing_marks: 0,
+          user: localStorage.getItem('loggedInUsername')
         }
       }
-      const requiredFields = ['form_name', 'template_name', 'total_mcqs', 'no_of_mcqs', 'total_marks'];
+      const requiredFields = ['form_name', 'template_name', 'total_mcqs', 'no_of_mcqs', 'total_marks', 'user'];
       const missingFields = requiredFields.filter(field => !data.formItems[field]);
       if (missingFields.length > 0) {
         const errorMessage = `Please fill in the following fields:<br>${missingFields.join('<br>')}`;
@@ -299,6 +301,7 @@ function FormItem() {
               Save Form
             </button>
           </div>
+
         </form>
       </div>
     </div>

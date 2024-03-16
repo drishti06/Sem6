@@ -25,6 +25,10 @@ const FormSchema = Schema({
     passing_marks: {
         type: Number,
         required: true
+    },
+    user: {
+        type: String,
+        required: true
     }
 })
 

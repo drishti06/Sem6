@@ -32,6 +32,9 @@ function Login() {
           text: 'Logged in'
         })
       }
+      else {
+        navigate('/allForms')
+      }
       navigate('/allForms')
     } catch (error) {
       if (error.response && error.response.status >= 400 || error.response.status <= 500) {
