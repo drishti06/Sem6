@@ -125,7 +125,7 @@ function Login() {
             </div>
           )}
           {isSignIn ? (
-            <button onClick={handleLogin} type="submit" className="sub-btn btn">
+            <button onClick={handleLogin} type="submit" className="sub-btn btn ">
               Login
             </button>
           ) : (
@@ -135,7 +135,7 @@ function Login() {
           )}
           <div className="link">
             <p>
-              {isSignIn ? "Don't have an account?" : "Already have an account?"}
+              {isSignIn ? "Don't have an account?   " : "Already have an account?  "}
               <button
                 type="button"
                 className="switch-link"

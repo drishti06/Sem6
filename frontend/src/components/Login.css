@@ -50,4 +50,13 @@
 
 .sub-btn {
   border: 1px solid white;
+  font-weight: 600;
+}
+
+.switch-link {
+  background-color: rgb(72, 45, 86);
+  border: 2px solid rgb(72, 45, 86);
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
 }

@@ -161,16 +161,9 @@ function FormItem() {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <div
-        style={{
-          paddingTop: "5rem",
-          width: "100 %",
-          paddingBottom: "2rem"
-        }}
-        className="container"
-      >
+      <div style={{ paddingTop: "5rem", width: "100%", paddingBottom: "2rem" }} className="container" >
         <form onSubmit={handleSubmit}>
-          <div className="input mb-3">
+          <div className="input mb-3 ">
             <span className="input-text" id="inputGroup-sizing-default">
               Enter Exam Name
             </span>

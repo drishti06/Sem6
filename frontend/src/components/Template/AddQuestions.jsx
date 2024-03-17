@@ -94,10 +94,10 @@ const AddQuestions = () => {
     return (
         <div style={{ display: 'flex' }}>
             <Sidebar />
-            <div style={{ width: '75%', paddingTop: '5rem' }} >
+            <div style={{ width: '75%', paddingTop: '5rem' }} className='container' >
                 <div className="input-group mb-3">
                     <input
-                        type="text"
+                         type="text"
                         className="form-control"
                         aria-label="Sizing example input"
                         placeholder="Enter Template Name"

@@ -62,13 +62,20 @@ const Template = () => {
                 temp_name: temp_name,
                 mcqs: mcqs
             };
-            // console.log(templateData)
-            const upload = await axios.post(`${baseURL}/api/temp`, templateData).then((res) => [
+            if (mcqs == '') {
                 Swal.fire({
-                    icon: 'success',
-                    text: `${temp_name} Template is added`
+                    icon: 'error',
+                    text: 'Select the Excel file and parse it properly.'
                 })
-            ])
+            }
+            else {
+                const upload = await axios.post(`${baseURL}/api/temp`, templateData).then((res) => [
+                    Swal.fire({
+                        icon: 'success',
+                        text: `${temp_name} Template is added`
+                    })
+                ])
+            }
         } catch (error) {
             console.log(error)
         }
@@ -103,7 +110,10 @@ const Template = () => {
                 setTotalQuestions(response.data.length)
             })
             .catch(function (error) {
-                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    text: `${error.message}`
+                })
 
             });
     }
