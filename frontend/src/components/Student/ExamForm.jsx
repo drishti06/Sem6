@@ -1,16 +1,22 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./ExamForm.css"
+import Swal from 'sweetalert2'
 
 const ExamForm = () => {
     const [examName, setExamName] = useState('')
     const [exam, setExam] = useState("")
     const [subName, setSubName] = useState("")
-    const [studentName, setStudentName] = useState("")
+    const [studentInfo, setStudentInfo] = useState({
+        name: '',
+        seatNo: '',
+        rollNo: ''
+    })
     const [examQues, setExamQues] = useState([])
     const [examAns, setExamAns] = useState([])
-    const [errorMessage, setErrorMessage] = useState('')
+    const [correctAns, setCorrectAns] = useState([])
     const [submitting, setSubmitting] = useState(false)
+    const [totalMarks, setTotalMarks] = useState(0)
     const [loading, setLoading] = useState(false) // New state for loading indication
 
     const baseURL = "http://localhost:8080"
@@ -20,16 +26,21 @@ const ExamForm = () => {
         setLoading(true); // Set loading state to true
         axios.post(`${baseURL}/form/examForm`, { examName })
             .then((res) => {
+                console.log(res)
                 setExam(res.data.form_name)
                 setSubName(res.data.template_name)
                 setExamQues(res.data.total_mcqs);
+                setCorrectAns(res.data.answers)
+                setTotalMarks(res.data.total_marks)
                 const initialAnswers = res.data.total_mcqs.map(() => '');
                 setExamAns(initialAnswers);
+                console.log(examAns)
             }).catch((error) => {
                 console.log(error)
             }).finally(() => {
                 setLoading(false); // Set loading state to false when response is received
             });
+
     }
 
     const handleAnswerSelection = (index, selectedAnswer) => {
@@ -39,29 +50,29 @@ const ExamForm = () => {
     }
 
     const handleSubmitAnswers = () => {
-        // if (examAns.some(answer => answer === '')) {
-        //     setErrorMessage('Please answer all questions before submitting.');
-        //     return;
-        // }
-
-        // if (studentName === '') {
-        //     setErrorMessage('Please enter your name before submitting.');
-        //     return;
-        // }
-
         setSubmitting(true);
-
-        axios.post(`${baseURL}/form/examResponse`, { answers: examAns, studentName, examName })
+        const res = axios.post(`${baseURL}/form/examResponse`, { answers: examAns, correctAns: correctAns, examName: examName, studentName: studentInfo.name, totalMarks: totalMarks })
             .then((res) => {
-                alert('Exam Submitted! ')
+                console.log(res)
                 setExamQues([]);
                 setExamName('')
-                setStudentName('')
+                setStudentInfo({})
                 setExamAns([]);
                 setSubmitting(false);
+                Swal.fire(
+                    {
+                        icon: 'success',
+                        text: `Your Score: ${res.data.score}`
+                    }
+                )
+
             }).catch((error) => {
                 console.log(error);
                 setSubmitting(false);
+                Swal.fire({
+                    icon: 'error',
+                    text: 'error'
+                })
             })
     }
 
@@ -79,10 +90,11 @@ const ExamForm = () => {
                         <span>Subject: {subName}</span>
                     </div>
                     <div className="input-group mb-3">
-                        <input type="text" className='form-control' placeholder="Enter exam name" onChange={(e) => { setExamName(e.target.value) }} name='exam_name' />
-                        <input type="text" className='form-control' placeholder="Enter Seat No" onChange={(e) => { setExamName(e.target.value) }} name='exam_name' />
-                        <input type="text" className='form-control' placeholder="Enter Roll No" onChange={(e) => { setExamName(e.target.value) }} name='exam_name' />
-                        {/* <button className='btn btn-primary' onClick={handleExamForm}>Load</button> */}
+                        <input type="text" className='form-control' placeholder="Enter exam name" value={examName} name='exam_name' />
+                        <input type="text" className='form-control' placeholder="Enter Name" onChange={(e) => setStudentInfo({ ...studentInfo, name: e.target.value })} name='exam_name' />
+                        <input type="text" className='form-control' placeholder="Enter Seat No" onChange={(e) => setStudentInfo({ ...studentInfo, seatNo: e.target.value })} name='exam_name' />
+                        <input type="number" className='form-control' placeholder="Enter Roll No" onChange={(e) => setStudentInfo({ ...studentInfo, rollNo: e.target.value })} name='exam_name' />
+
                     </div>
                     <div className='q-a'>
                         {examQues.map((data, index) => (
@@ -107,7 +119,7 @@ const ExamForm = () => {
                             </div>
                         ))}
                     </div>
-                    {errorMessage && <div className="error-message">{errorMessage}</div>}
+                    {/* {errorMessage && <div className="error-message">{errorMessage}</div>} */}
                     {submitting ? (
                         <div className="submitting-message">Your response is being submitted...</div>
                     ) : (

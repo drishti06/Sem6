@@ -22,6 +22,7 @@ function FormItem() {
   const [email, setemail] = useState([]);
   const [date, setdate] = useState();
   const [prevQ, setPrevQ] = useState([])
+  const [answers, setAnswers] = useState([])
   const baseURL = "http://localhost:8080";
 
   useEffect(() => {
@@ -62,12 +63,12 @@ function FormItem() {
     }
   };
 
-  const handlePreviewQuestions = () => {
+  const handlePreviewQuestions = async () => {
     const data = {
       temp_name: selectedTemplate,
       number: selectedQuestions
     }
-    console.log(data.temp_name)
+    // console.log(data.temp_name)
     if (data.temp_name == '' || data.number == 0) {
       Swal.fire({
         icon: 'error',
@@ -76,9 +77,11 @@ function FormItem() {
     }
     else {
       try {
-        axios.post(`${baseURL}/api/randomQuestions`, data).then((res) => {
-          console.log(res.data)
-          setPrevQ(res.data)
+        await axios.post(`${baseURL}/api/randomQuestions`, data).then((res) => {
+          console.log(res)
+          setPrevQ(res.data.randomMcqs)
+          setAnswers(res.data.answers)
+
         })
       } catch (error) {
         console.log(error)
@@ -116,10 +119,11 @@ function FormItem() {
           no_of_mcqs: totQues,
           total_marks: total,
           passing_marks: 0,
+          answers: answers,
           user: localStorage.getItem('loggedInUsername')
         }
       }
-      const requiredFields = ['form_name', 'template_name', 'total_mcqs', 'no_of_mcqs', 'total_marks', 'user'];
+      const requiredFields = ['form_name', 'template_name', 'total_mcqs', 'no_of_mcqs', 'total_marks', 'user', 'answers'];
       const missingFields = requiredFields.filter(field => !data.formItems[field]);
       if (missingFields.length > 0) {
         const errorMessage = `Please fill in the following fields:<br>${missingFields.join('<br>')}`;

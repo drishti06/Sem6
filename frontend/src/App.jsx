@@ -10,6 +10,7 @@ import AddQuestions from './components/Template/AddQuestions';
 import AllForm from './components/Form/AllForm';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 function App() {
+
   return (
     <Router>
       <Routes>

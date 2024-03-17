@@ -12,6 +12,16 @@ function Login() {
   const [confirmPassword, setConfrimPassword] = useState('')
   const navigate = useNavigate()
 
+  useEffect(() => {
+    const loggedInUsername = localStorage.getItem('loggedInUsername');
+    if (loggedInUsername) {
+      navigate('/allForms'); // Navigate to allForms if loggedInUsername is present
+    } else {
+      navigate('/'); // Otherwise, navigate to login
+    }
+  }, [navigate]);
+
+
   const handleSwitchForm = () => {
     setIsSignIn((prevIsSignIn) => !prevIsSignIn);
   };
@@ -80,6 +90,8 @@ function Login() {
     }
 
   }
+
+
   return (
     <div className={`wrapper ${isSignIn ? "animated-signin" : "animated-signup"}`}>
       <div className="logoo">

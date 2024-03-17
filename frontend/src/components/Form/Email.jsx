@@ -1,18 +1,18 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { ReactMultiEmail, isEmail } from 'react-multi-email';
 import 'react-multi-email/dist/style.css';
+import DateTime from './DateTime';
 
 function Email(props) {
   const [emails, setEmails] = useState([]);
   const [focused, setFocused] = useState(false);
-  console.log(emails)
+  // console.log(emails)
   useEffect(() => {
     props.Email(emails)
   }, [emails])
   const baseURL = 'http://localhost:8080'
-  const handleEmail = () =>{
-    axios.post(`${baseURL}/`)
-  }
+
   return (
     <>
       <h3>Email</h3>
@@ -36,7 +36,6 @@ function Email(props) {
         }}
       />
       <br />
-
       <p>{emails.join(',   ') || 'Enter atleast One Email'}</p>
     </>
   );

@@ -10,11 +10,19 @@ const ResponseSchema = Schema({
         required: true
     },
     answers: {
-        type: [String], // Array of answers
+        type: [String],
         required: true
     },
     student_name: {
         type: String,
+        required: true
+    },
+    score: {
+        type: Number,
+        required: true
+    },
+    total_marks: {
+        type: Number,
         required: true
     }
 });

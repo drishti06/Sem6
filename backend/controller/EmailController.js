@@ -1,11 +1,12 @@
 import { Email } from "../model/Email.js";
 import { createTransport } from "nodemailer";
 import Mailgen from "mailgen";
+import { Form } from "../model/FormModel.js";
 export const newEmail = async (req, res) => {
   try {
+    // console.log("inside newEmail")
     const { formItems } = req.body;
     const form_name = formItems.form_name;
-
     // Check if the form already exists
     let existingForm = await Email.findOne({ form_name });
 
@@ -13,11 +14,12 @@ export const newEmail = async (req, res) => {
       // Update existing form data
       existingForm.formItems = formItems;
       await existingForm.save();
-      SendMail(existingForm.email,existingForm.form_name);
+      SendMail(existingForm.email, existingForm.form_name);
       res.status(200).json(existingForm);
     } else {
       // Create a new form
       const form = await Email.create(formItems);
+      SendMail(formItems.email, formItems.form_name);
       res.status(200).json(form);
     }
   } catch (error) {
@@ -25,7 +27,7 @@ export const newEmail = async (req, res) => {
   }
 };
 
-function SendMail(emails,form_name) {
+function SendMail(emails, form_name) {
   let config = {
     service: "gmail",
     port: 587,
@@ -44,11 +46,11 @@ function SendMail(emails,form_name) {
       link: "https://lk5pz0d3-3000.inc1.devtunnels.ms/",
     },
   });
-
+  // https://42ktm36f-3000.inc1.devtunnels.ms/
   let response = {
     body: {
       name: "Students",
-      outro: `https://42ktm36f-3000.inc1.devtunnels.ms/exam?name=${encodeURIComponent(form_name)}`,
+      outro: ` https://42ktm36f-3000.inc1.devtunnels.ms/exam`,
     },
   };
 
