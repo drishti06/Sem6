@@ -36,3 +36,24 @@ export const allForms = async (req, res) => {
         res.status(400).json({ errorInShowingAllForms: error.message })
     }
 }
+
+export const formDetails = async (req, res) => {
+    try {
+        const formName = req.body.formName
+        const formDetails = await Form.find({ form_name: formName })
+        res.status(200).json(formDetails)
+    } catch (error) {
+        res.status(400).status({ errorInFormDetails: error.message })
+    }
+}
+
+
+export const deleteForm = async (req, res) => {
+    try {
+        const id = req.params.id
+        const deleteForm = await Form.findByIdAndDelete({ _id: id })
+        res.status(200).json("succesfully deleted template")
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}

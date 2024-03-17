@@ -1,5 +1,5 @@
 import express from "express"
-import { allForms, examForm, newForm } from "../controller/FormController.js"
+import { allForms, deleteForm, examForm, formDetails, newForm } from "../controller/FormController.js"
 import { responses } from "../controller/ResponseController.js"
 import { newEmail } from "../controller/EmailController.js"
 
@@ -9,5 +9,7 @@ router.post('/createForm', newForm)
     .post('/examForm', examForm)
     .post('/examResponse', responses)
     .get('/allForms', allForms)
-    .post('/email',newEmail)
+    .post('/email', newEmail)
+    .post('/detail', formDetails)
+    .get('/deleteForm/:id', deleteForm)
 export default router

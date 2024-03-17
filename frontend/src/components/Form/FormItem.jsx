@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Fab } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import DateTime from "../Form/DateTime";
 import Sidebar from "../Sidebar";
-// import { Email } from "@mui/icons-material";
-import Email from "./Email";
 import Swal from "sweetalert2";
 
 function FormItem() {
@@ -19,8 +14,6 @@ function FormItem() {
   const [marksPerQuestion, setMarksPerQuestion] = useState(0);
   const [error, setError] = useState("");
   const [selectedQuestions, setSelectedQuestions] = useState(0); // Newly added state for selected number of questions
-  const [email, setemail] = useState([]);
-  const [date, setdate] = useState();
   const [prevQ, setPrevQ] = useState([])
   const [answers, setAnswers] = useState([])
   const baseURL = "http://localhost:8080";
@@ -100,9 +93,18 @@ function FormItem() {
 
 
   const handleInputChange1 = (e) => {
-    console.log(e.target.value)
-    setPassingMarks(e.target.value)
-    setPercent(e.target.value);
+    const passMarks = e.target.value
+    const tot = total
+    if (passMarks <= tot) {
+      setPassingMarks(passMarks)
+      setPercent(e.target.value);
+    }
+    else {
+      Swal.fire({
+        icon: 'error',
+        text: `passing marks should be less than ${total}`
+      })
+    }
   };
 
   const [examFormName, setExamFormName] = useState('')
@@ -116,14 +118,14 @@ function FormItem() {
           form_name: examFormName,
           template_name: selectedTemplate,
           total_mcqs: prevQ,
-          no_of_mcqs: totQues,
+          no_of_mcqs: selectedQuestions,
           total_marks: total,
-          passing_marks: 0,
+          passing_marks: passing_marks,
           answers: answers,
           user: localStorage.getItem('loggedInUsername')
         }
       }
-      const requiredFields = ['form_name', 'template_name', 'total_mcqs', 'no_of_mcqs', 'total_marks', 'user', 'answers'];
+      const requiredFields = ['form_name', 'template_name', 'total_mcqs', 'no_of_mcqs', 'passing_marks', 'total_marks', 'user', 'answers'];
       const missingFields = requiredFields.filter(field => !data.formItems[field]);
       if (missingFields.length > 0) {
         const errorMessage = `Please fill in the following fields:<br>${missingFields.join('<br>')}`;
@@ -288,7 +290,6 @@ function FormItem() {
               type="number"
               className="form-control"
               placeholder="Enter Number"
-              max={total}
               onChange={handleInputChange1}
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
