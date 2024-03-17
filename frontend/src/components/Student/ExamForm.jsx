@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import "./ExamForm.css"
 import Swal from 'sweetalert2'
 
+
+
 const ExamForm = () => {
     const [examName, setExamName] = useState('')
     const [exam, setExam] = useState("")
@@ -18,15 +20,16 @@ const ExamForm = () => {
     const [submitting, setSubmitting] = useState(false)
     const [totalMarks, setTotalMarks] = useState(0)
     const [loading, setLoading] = useState(false) // New state for loading indication
-
+    const [name, setName] = useState('');
     const baseURL = "http://localhost:8080"
-
-    const handleExamForm = (e) => {
-        e.preventDefault()
-        setLoading(true); // Set loading state to true
-        axios.post(`${baseURL}/form/examForm`, { examName })
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const examName = searchParams.get('name');
+    setName(examName);
+    setLoading(true);
+    axios.post(`${baseURL}/form/examForm`, { examName })
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 setExam(res.data.form_name)
                 setSubName(res.data.template_name)
                 setExamQues(res.data.total_mcqs);
@@ -34,14 +37,21 @@ const ExamForm = () => {
                 setTotalMarks(res.data.total_marks)
                 const initialAnswers = res.data.total_mcqs.map(() => '');
                 setExamAns(initialAnswers);
-                console.log(examAns)
+                // console.log(examAns)
             }).catch((error) => {
                 console.log(error)
+                Swal.fire({
+                    icon: 'info',
+                    text: error.response.data.message
+                })
             }).finally(() => {
                 setLoading(false); // Set loading state to false when response is received
             });
+  }, []);
 
-    }
+    // console.log(name);
+    
+
 
     const handleAnswerSelection = (index, selectedAnswer) => {
         const updatedAnswers = [...examAns];
@@ -51,7 +61,8 @@ const ExamForm = () => {
 
     const handleSubmitAnswers = () => {
         setSubmitting(true);
-        const res = axios.post(`${baseURL}/form/examResponse`, { answers: examAns, correctAns: correctAns, examName: examName, studentName: studentInfo.name, totalMarks: totalMarks })
+        console.log("Shivam",{ answers: examAns, correctAns: correctAns, examName: name, studentName: studentInfo.name, totalMarks: totalMarks })
+         axios.post(`${baseURL}/form/examResponse`, { answers: examAns, correctAns: correctAns, examName: name, studentName: studentInfo.name, totalMarks: totalMarks })
             .then((res) => {
                 console.log(res)
                 setExamQues([]);
@@ -78,10 +89,7 @@ const ExamForm = () => {
 
     return (
         <div className="exam-wrapper">
-            <div className="input-group mb-3">
-                <input type="text" className='form-control' placeholder="Enter exam name" onChange={(e) => { setExamName(e.target.value) }} name='exam_name' />
-                <button className='btn btn-primary' onClick={handleExamForm}>Load</button>
-            </div>
+           
             {loading && <div>Loading exam...</div>} {/* Show loading message when loading state is true */}
             {!loading && exam && ( // Show the rest of the form when exam data is available
                 <div className="examForm">
@@ -90,7 +98,7 @@ const ExamForm = () => {
                         <span>Subject: {subName}</span>
                     </div>
                     <div className="input-group mb-3">
-                        <input type="text" className='form-control' placeholder="Enter exam name" value={examName} name='exam_name' />
+                        {/* <input type="text" className='form-control' placeholder="Enter exam name" value={name} name='exam_name' /> */}
                         <input type="text" className='form-control' placeholder="Enter Name" onChange={(e) => setStudentInfo({ ...studentInfo, name: e.target.value })} name='exam_name' />
                         <input type="text" className='form-control' placeholder="Enter Seat No" onChange={(e) => setStudentInfo({ ...studentInfo, seatNo: e.target.value })} name='exam_name' />
                         <input type="number" className='form-control' placeholder="Enter Roll No" onChange={(e) => setStudentInfo({ ...studentInfo, rollNo: e.target.value })} name='exam_name' />

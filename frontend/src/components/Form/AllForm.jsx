@@ -12,10 +12,8 @@ const AllForm = () => {
     const [email, setemail] = useState([]);
     const [selectedForm, setSelectedForm] = useState(null);
     const [formDetail, setFormDetail] = useState([])
-    const [date, setdate] = useState({
-        start: '',
-        end: ''
-    });
+    const [startdate, setstartdate] = useState('');
+    const [enddate, setenddate] = useState('');
     const baseURL = 'http://localhost:8080'
     useEffect(() => {
         axios.get(`${baseURL}/form/allForms`)
@@ -26,7 +24,10 @@ const AllForm = () => {
                 console.log(error.message)
             })
     }, [])
-
+    useEffect(() => {
+        console.log(startdate);
+        console.log(enddate)
+    }, [startdate,enddate])
     const handleShareButtonClick = (formName) => {
         setSelectedForm(formName);
     };
@@ -43,11 +44,11 @@ const AllForm = () => {
         const formItems = {
             form_name: selectedForm,
             email: email,
-            startDate: date.start,
-            endDate: date.end
+            startDate: startdate,
+            endDate: enddate
         }
         const resp = await axios.post(`${baseURL}/form/email`, { formItems })
-        // console.log(resp.response)
+        console.log(resp.response)
     }
 
     const handleDetele = async (id) => {
@@ -139,7 +140,7 @@ const AllForm = () => {
                                             </div>
                                             <div className="modal-body" >
                                                 <Email Email={setemail} />
-                                                <DateTime date={setdate} />
+                                                <DateTime startdate={setstartdate} enddate={setenddate} />
                                             </div>
                                             <div className="modal-footer">
                                                 <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleFormSharing}>Send</button>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -6,54 +6,42 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 
 function DateTime(props) {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
-  useEffect(() => {
-    props.date({
-      start: startDate,
-      end: endDate
-    });
-  }, [startDate, endDate]);
+ 
 
   const handleDateChangeStart = (event) => {
     const startDateValue = event.target.value;
     setStartDate(startDateValue);
-    console.log(startDateValue)
+    props.startdate(startDateValue);
   };
 
   const handleDateChangeEnd = (event) => {
     const endDateValue = event.target.value;
     setEndDate(endDateValue);
-    console.log(endDateValue)
+    props.enddate(endDateValue);
   };
 
   const minDate = dayjs();
 
   return (
-
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DateTimePicker']}>
-        {/* <DateTimePicker label="Set Start Time" value={startDate}
-          onChange={handleDateChangeStart} minDate={minDate} /> */}
         <div className="time" style={{ display: 'flex', justifyContent: 'space-between' }}>
-
           <div className="start">
-            <label htmlFor="">Start Time</label>
+            <label htmlFor="startDate">Start Time</label>
             <br />
-            <input type="datetime-local" id="startDate" onChange={handleDateChangeStart} name="startDate" value={startDate} min={minDate} />
+            <input type="datetime-local" id="startDate" onChange={handleDateChangeStart} name="startDate" value={startDate} min={minDate.format('YYYY-MM-DDTHH:mm')} />
           </div>
           <div className="end">
-            <label htmlFor="">End Time</label>
+            <label htmlFor="endDate">End Time</label>
             <br />
-            <input type="datetime-local" id="startDate" onChange={handleDateChangeEnd} name="endDate" value={endDate} min={startDate} />
+            <input type="datetime-local" id="endDate" onChange={handleDateChangeEnd} name="endDate" value={endDate} min={startDate} />
           </div>
         </div>
-        {/* <DateTimePicker label="Set End Time" value={endDate}
-          onChange={handleDateChangeEnd} minDate={startDate} /> */}
       </DemoContainer>
     </LocalizationProvider>
-
   );
 }
 
