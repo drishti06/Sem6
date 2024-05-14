@@ -18,10 +18,6 @@ async function main() {
     await mongoose.connect(process.env.MONGODB_URL).then(() => console.log("database connected"));
 }
 
-server.get('/', (req, res) => {
-    res.status(200).json("hello , good morning!")
-})
-
 server.use("/api", TemplateRoute)
     .use("/form", FormRoute)
     .use("/auth", AuthRoute)

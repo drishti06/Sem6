@@ -27,7 +27,7 @@ const AllForm = () => {
     useEffect(() => {
         console.log(startdate);
         console.log(enddate)
-    }, [startdate,enddate])
+    }, [startdate, enddate])
     const handleShareButtonClick = (formName) => {
         setSelectedForm(formName);
     };
@@ -47,8 +47,13 @@ const AllForm = () => {
             startDate: startdate,
             endDate: enddate
         }
-        const resp = await axios.post(`${baseURL}/form/email`, { formItems })
-        console.log(resp.response)
+        await axios.post(`${baseURL}/form/email`, { formItems }).then((res) => {
+            Swal.fire({
+                icon: 'success',
+                text: 'Email sent successfully'
+            })
+        })
+
     }
 
     const handleDetele = async (id) => {
@@ -64,6 +69,10 @@ const AllForm = () => {
             })
         })
     }
+
+    useEffect(() => {
+        console.log(1)
+    }, [formDetail])
     return (
         <div style={{ display: 'flex' }}>
             <Sidebar />
@@ -112,56 +121,56 @@ const AllForm = () => {
                                                                                     <span>D. {mcq.D}</span>
                                                                                     <strong>
 
-                                                                                    <span>Ans. {mcq.Solution}</span>
-                                                                                </strong>
-                                                                                <br />
-                                                                            </div>
-                                                                        )
-                                                                    })}
+                                                                                        <span>Ans. {mcq.Solution}</span>
+                                                                                    </strong>
+                                                                                    <br />
+                                                                                </div>
+                                                                            )
+                                                                        })}
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button onClick={() => handleShareButtonClick(form.form_name)} type="button" className="btn btn-primary form-btn" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                                    Share
-                                </button>
-                                <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div style={{ paddingTop: '2rem' }} className="modal-dialog">
-                                        <div className="modal-content" style={{ width: '45vw' }}>
-                                            <div className="modal-header">
-                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div className="modal-body" >
-                                                <Email Email={setemail} />
-                                                <DateTime startdate={setstartdate} enddate={setenddate} />
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleFormSharing}>Send</button>
-                                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                                <div className="modal-footer">
+                                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <button onClick={() => handleShareButtonClick(form.form_name)} type="button" className="btn btn-primary form-btn" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                        Share
+                                    </button>
+                                    <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div style={{ paddingTop: '2rem' }} className="modal-dialog">
+                                            <div className="modal-content" style={{ width: '45vw' }}>
+                                                <div className="modal-header">
+                                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div className="modal-body" >
+                                                    <Email Email={setemail} />
+                                                    <DateTime startdate={setstartdate} enddate={setenddate} />
+                                                </div>
+                                                <div className="modal-footer">
+                                                    <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleFormSharing}>Send</button>
+                                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => {
+                                        handleDetele(form._id)
+                                    }} className="btn btn-primary" >
+                                        <DeleteIcon />
+                                    </button>
                                 </div>
-                                <button onClick={() => {
-                                    handleDetele(form._id)
-                                }} className="btn btn-primary" >
-                                    <DeleteIcon />
-                                </button>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     )
 }
-
-export default AllForm
+export default AllForm;

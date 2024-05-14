@@ -22,12 +22,12 @@ const ExamForm = () => {
     const [loading, setLoading] = useState(false) // New state for loading indication
     const [name, setName] = useState('');
     const baseURL = "http://localhost:8080"
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const examName = searchParams.get('name');
-    setName(examName);
-    setLoading(true);
-    axios.post(`${baseURL}/form/examForm`, { examName })
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const examName = searchParams.get('name');
+        setName(examName);
+        setLoading(true);
+        axios.post(`${baseURL}/form/examForm`, { examName })
             .then((res) => {
                 // console.log(res)
                 setExam(res.data.form_name)
@@ -47,10 +47,10 @@ const ExamForm = () => {
             }).finally(() => {
                 setLoading(false); // Set loading state to false when response is received
             });
-  }, []);
+    }, []);
 
     // console.log(name);
-    
+
 
 
     const handleAnswerSelection = (index, selectedAnswer) => {
@@ -61,8 +61,8 @@ const ExamForm = () => {
 
     const handleSubmitAnswers = () => {
         setSubmitting(true);
-        console.log("Shivam",{ answers: examAns, correctAns: correctAns, examName: name, studentName: studentInfo.name, totalMarks: totalMarks })
-         axios.post(`${baseURL}/form/examResponse`, { answers: examAns, correctAns: correctAns, examName: name, studentName: studentInfo.name, totalMarks: totalMarks })
+        console.log({ answers: examAns, correctAns: correctAns, examName: name, studentName: studentInfo.name, totalMarks: totalMarks })
+        axios.post(`${baseURL}/form/examResponse`, { answers: examAns, correctAns: correctAns, examName: name, studentName: studentInfo.name, totalMarks: totalMarks })
             .then((res) => {
                 console.log(res)
                 setExamQues([]);
@@ -89,7 +89,7 @@ const ExamForm = () => {
 
     return (
         <div className="exam-wrapper">
-           
+
             {loading && <div>Loading exam...</div>} {/* Show loading message when loading state is true */}
             {!loading && exam && ( // Show the rest of the form when exam data is available
                 <div className="examForm">

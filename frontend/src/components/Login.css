@@ -1,5 +1,5 @@
 .wrapper {
-  background: linear-gradient(45deg, rgb(207, 108, 124), rgb(143, 15, 143));
+  /* background: linear-gradient(45deg, rgb(207, 108, 124), rgb(143, 15, 143)); */
   display: flex;
   justify-content: space-around;
   align-items: center;

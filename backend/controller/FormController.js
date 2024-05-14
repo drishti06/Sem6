@@ -20,13 +20,13 @@ export const examForm = async (req, res) => {
   try {
     const name = req.body.examName;
     const time = await Email.findOne({ form_name: name });
-    
+    // console.log(time.startDate)
     const currentDateTime = new Date(); // Get current date and time
-    
+    console.log(currentDateTime)
     if (currentDateTime < time.startDate) {
-      res.status(403).json({message:"Exam has not yet started."});
+      res.status(403).json({ message: "Exam has not yet started." });
     } else if (currentDateTime > time.endDate) {
-        res.status(403).json({message:"Exam has ended."});
+      res.status(403).json({ message: "Exam has ended." });
     } else {
       console.log("Exam is currently ongoing.");
       const form = await Form.findOne({ form_name: name });
